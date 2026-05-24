@@ -1,0 +1,1076 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Roblox Games</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+   <style>
+    :root{
+      --bg-1: #00110a;
+      --bg-2: #002217;
+      --glass: rgba(0,255,120,0.08);
+      --glass-2: rgba(0,255,120,0.036);
+      --accent: #00FF55; /* bright neon */
+      --accent-2: hwb(144 9% 62% / 0.473); /* light neon */
+      --muted: rgba(190,255,210,0.95);
+      --card-radius: 16px;
+      color-scheme: dark;
+    }
+
+   *{box-sizing:border-box}
+    html,body{height:100%}
+
+    /* favorites removed */
+    body{
+      margin:0;background:var(--bg-1);
+      font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial; color:#fff; -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;padding:32px;
+    }
+
+    .wrap{max-width:1200px;margin:0 auto}
+
+    header.app-header{
+      display:flex;align-items:center;gap:18px;justify-content:space-between;padding:18px;background:linear-gradient(180deg,var(--glass),transparent);border-radius:14px;border:1px solid rgba(255,255,255,0.03);backdrop-filter:blur(8px);
+      box-shadow:0 8px 30px rgba(2,10,30,0.6);
+    }
+
+      .brand{display:flex;align-items:center;gap:14px}
+    .logo{width:56px;height:56px;background:linear-gradient(135deg,var(--accent),var(--accent-2));border-radius:12px;display:grid;place-items:center;font-weight:700;color:#041018;box-shadow:0 12px 44px rgba(0,255,120,0.24), inset 0 0 14px rgba(0,255,120,0.08)}
+    .title h1{margin:0;font-size:1.35rem;line-height:1;color:transparent;background:linear-gradient(90deg,var(--accent),var(--accent-2));background-clip:text;-webkit-background-clip:text;text-shadow:0 8px 22px rgba(0,255,120,0.08)}
+    .title p{margin:3px 0 0;font-size:0.9rem;color:var(--muted)}
+
+    .controls{display:flex;gap:12px;align-items:center}
+    .search{display:flex;align-items:center;gap:8px;background:var(--glass);padding:8px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    .search input{background:transparent;border:0;color:#fff;outline:none;padding:6px 8px;min-width:0;width:clamp(120px,34vw,220px)}
+    select#lang-select{
+      -webkit-appearance:none;
+      -moz-appearance:none;
+      appearance:none;
+      background-color: #000; /* solid black background */
+      background: linear-gradient(180deg, #000, #000); /* force black across browsers */
+      border: 1px solid rgba(255,255,255,0.04);
+      color: #fff;
+      padding: 8px 34px 8px 10px;
+      border-radius: 10px;
+      outline: none;
+      min-width: 88px;
+      background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 width=%2218%22 height=%2218%22%3E%3Cpolyline points=%226 9 12 15 18 9%22 stroke=%22%23ffffff%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22 fill=%22none%22/%3E%3C/svg%3E');
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      background-size: 18px;
+      cursor: pointer;
+    }
+
+    /* Many native select dropdowns are rendered by the OS and ignore option styles.
+       This attempts to force dark options where supported. */
+    select#lang-select option{
+      background-color: #000 !important;
+      color: #fff !important;
+      padding: 6px 8px;
+    }
+
+    /* Windows/Edge caret fix */
+    select#lang-select::-ms-expand{filter:invert(1);}    
+
+    /* Custom flag dropdown (fallback for native select) */
+    .lang-dropdown{position:relative}
+    #lang-toggle{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(180deg,var(--bg-2),var(--bg-1));border:1px solid rgba(255,255,255,0.04);color:#fff;padding:8px 10px;border-radius:10px;cursor:pointer;min-width:88px}
+    #lang-toggle img{width:18px;height:12px;object-fit:cover;border-radius:2px}
+    #lang-toggle span{font-size:0.95rem}
+    #lang-toggle.lang-anim{animation:langPulse .52s cubic-bezier(.2,.9,.2,1)}
+    @keyframes langPulse{0%{transform:scale(1);filter:drop-shadow(0 0 0 rgba(0,255,120,0))}40%{transform:scale(1.06);filter:drop-shadow(0 8px 28px rgba(0,255,120,0.12))}100%{transform:scale(1);filter:drop-shadow(0 0 0 rgba(0,255,120,0))}}
+    #lang-menu{position:absolute;right:0;margin-top:8px;background:var(--bg-1);border:1px solid rgba(255,255,255,0.04);border-radius:10px;list-style:none;padding:8px;box-shadow:0 10px 36px rgba(0,0,0,0.5);z-index:999}
+    #lang-menu li{display:flex;align-items:center;gap:8px;padding:8px;border-radius:8px;cursor:pointer;color:var(--muted)}
+    #lang-menu li:hover{background:rgba(0,255,120,0.04);color:#fff}
+    #lang-menu li img{width:18px;height:12px;object-fit:cover;border-radius:2px}
+
+    .hero{margin:28px 0 18px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .hero .left{flex:1}
+    .hero h2{margin:0;font-size:2.2rem;letter-spacing:-0.6px}
+    .hero p{margin:10px 0 0;color:var(--muted);max-width:60%}
+
+    .categories{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+    .cat-btn{padding:14px 22px;border-radius:18px;border:1px solid rgba(0,0,0,0.12);background:rgba(0,50,35,0.4);color:var(--accent);font-weight:700;font-size:1.05rem;cursor:pointer;transition:transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .22s cubic-bezier(.2,.8,.2,1),background-color .18s,color .18s;will-change:transform,box-shadow;transform:translateZ(0)}
+    .cat-btn:focus{outline:none;transform:translate3d(0,-2px,0) scale(1.03);box-shadow:0 18px 48px rgba(0,140,100,0.12),0 0 16px rgba(0,140,100,0.06)}
+    .cat-btn:hover{transform:translate3d(0,-4px,0) scale(1.03);box-shadow:0 24px 72px rgba(0,170,120,0.16)}
+     /* When pressing the category button, use the original text color as background
+       and invert text color for contrast to avoid a dark flash on click. */
+     .cat-btn:active{transform:translateY(0) scale(.995);background:var(--accent);color:#041018;box-shadow:0 18px 48px rgba(0,140,100,0.12)}
+     .cat-btn.active{background:var(--accent);color:#041018;box-shadow:0 24px 84px rgba(0,200,140,0.34);transform:translateY(-6px)}
+    main#game-list{margin-top:26px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+
+    .card{background:linear-gradient(180deg, rgba(0,50,35,0.4), rgba(255,255,255,0.01));border-radius:var(--card-radius);overflow:hidden;border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;transition:transform .26s cubic-bezier(.2,.8,.2,1),box-shadow .26s cubic-bezier(.2,.8,.2,1);backdrop-filter:blur(6px);touch-action:manipulation;will-change:transform,box-shadow;transform:translateZ(0)}
+    .card:hover{transform:translate3d(0,-8px,0) scale(1.02);box-shadow:0 22px 72px rgba(0,255,120,0.18), 0 8px 28px rgba(0,0,0,0.55);border-color:rgba(0,255,120,0.14)}
+    .thumb{height:auto;aspect-ratio:16/9;background-size:cover;background-position:center;width:100%;will-change:background-position,transform;transition:transform .24s cubic-bezier(.2,.8,.2,1),background-position .24s cubic-bezier(.2,.8,.2,1)}
+    .card-body{padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+    .meta{display:flex;align-items:center;justify-content:space-between}
+    .badge{font-size:12px;color:var(--muted)}
+    .fav-btn{background:transparent;border:none;color:var(--muted);font-size:18px;cursor:pointer;padding:0 6px;line-height:1;transition:color .18s}
+    .fav-btn:hover{color:var(--accent)}
+    .fav-btn:focus{outline:none;box-shadow:0 0 0 2px rgba(0,255,120,0.6)}
+    .card-actions{display:flex;gap:8px;margin-top:8px}
+    .action-btn{background:rgba(0,255,120,0.12);border:1px solid rgba(0,255,120,0.2);border-radius:10px;color:#fff;font-size:0.85rem;padding:6px 10px;cursor:pointer;transition:transform .15s,background .15s;}
+    .action-btn:hover{background:rgba(0,255,120,0.2);transform:translateY(-1px)}
+    .action-btn:focus{outline:none;box-shadow:0 0 0 2px rgba(0,255,120,0.6)}
+
+    /* Make card clickable as a link */
+    .card-link{display:flex;flex-direction:column;height:100%;text-decoration:none;color:inherit}
+
+    /* Ensure game name links never show an underline or bottom border (force override) */
+    a.name, .card a.name {
+      text-decoration: none !important;
+      -webkit-text-decoration: none !important;
+      -webkit-text-decoration-line: none !important;
+      text-decoration-line: none !important;
+      text-decoration-color: transparent !important;
+      border-bottom: none !important;
+      color: var(--accent) !important;
+      transition: color .18s cubic-bezier(.2,.8,.2,1),transform .18s;
+      will-change:color,transform;
+    }
+    a.name:hover, a.name:active { text-decoration: none !important; }
+    a.name:focus-visible{outline:none;box-shadow:0 8px 28px rgba(0,255,120,0.08)}
+
+    /* add-game / modal styles retained for reference; the
+       interactive form and button have been removed from the page */
+
+    /* Toast Notification */
+    .toast{position:fixed;bottom:24px;right:24px;background:var(--accent);color:#041018;padding:14px 20px;border-radius:8px;font-weight:600;box-shadow:0 8px 24px rgba(0,210,122,0.3);animation:slideIn .3s ease-out;z-index:99999}
+    @keyframes slideIn{from{transform:translateX(400px);opacity:0}to{transform:translateX(0);opacity:1}}
+    @keyframes slideOut{from{transform:translateX(0);opacity:1}to{transform:translateX(400px);opacity:0}}
+    .toast.removing{animation:slideOut .3s ease-in}
+    @media (max-width:640px){.toast{bottom:16px;right:16px;left:16px;width:auto}}
+
+    footer{margin-top:34px;text-align:center;color:rgba(255,255,255,0.45);font-size:13px}
+
+    @media (max-width:1000px){
+      .grid{grid-template-columns:repeat(2,1fr)}
+      .hero p{max-width:100%}
+      body{padding:24px}
+    }
+    @media (max-width:640px){
+      body{padding:16px}
+      .grid{grid-template-columns:1fr}
+      .hero{flex-direction:column;align-items:flex-start;gap:14px}
+      .hero h2{font-size:1.5rem}
+      .hero p{max-width:100%;font-size:0.95rem}
+      .wrap{padding:0}
+      header.app-header{border-radius:12px;padding:14px}
+      .categories{margin-top:12px}
+    }
+
+    /* Mobile (small phones) tweaks */
+    @media (max-width:480px){
+      body{padding:10px;font-size:16px}
+      header.app-header{flex-direction:column;align-items:flex-start;gap:12px;padding:14px;border-radius:12px}
+      header.app-header .brand{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px}
+      .controls{width:100%;display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+      .search{flex:1;min-width:0;width:100%;min-height:44px;border-radius:10px}
+      .search input{width:100%;min-width:0;padding:10px 8px;font-size:16px}
+      .search svg{width:20px;height:20px}
+      select#lang-select{min-width:70px;padding:10px 10px;min-height:44px;font-size:16px}
+      .logo{width:50px;height:50px}
+      .hero{margin:16px 0 12px}
+      .hero h2{font-size:1.35rem;margin-bottom:8px}
+      .hero p{font-size:0.9rem}
+      .categories{gap:8px}
+      .cat-btn{padding:12px 14px;font-size:0.9rem;min-height:44px;border-radius:16px}
+      .thumb{aspect-ratio:16/9;height:auto;min-height:100px}
+      .name{white-space:normal;font-size:0.95rem;line-height:1.3;text-decoration:none;color:var(--accent)}
+      a.name, .card a.name { text-decoration: none !important; border-bottom: none !important; color: inherit !important }
+      .card{border-radius:12px;gap:6px}
+      .card-body{padding:10px 12px;gap:6px}
+      .meta{gap:8px}
+      .badge{font-size:11px}
+    }
+
+    /* Extra mobile improvements: category scrolling, larger tap targets, responsive logo image */
+    @media (max-width:520px){
+      .categories{overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch;gap:8px;scroll-behavior:smooth}
+      .categories::-webkit-scrollbar{height:4px}
+      .categories::-webkit-scrollbar-track{background:transparent}
+      .categories::-webkit-scrollbar-thumb{background:rgba(0,255,120,0.3);border-radius:2px}
+      .cat-btn{white-space:nowrap;flex:0 0 auto;padding:12px 16px;font-size:0.95rem;min-height:44px;touch-action:manipulation}
+      .open{padding:12px 14px;font-size:1rem}
+      .thumb{min-height:120px}
+      .card{border-radius:12px}
+    }
+
+    /* Extra small phones (under 360px) */
+    @media (max-width:360px){
+      body{padding:8px}
+      header.app-header{padding:12px;gap:10px}
+      .logo{width:44px;height:44px}
+      .title h1{font-size:1.1rem}
+      .title p{font-size:0.8rem}
+      .hero h2{font-size:1.2rem}
+      .search input{font-size:16px;padding:8px 6px}
+      select#lang-select{min-width:64px;font-size:14px}
+      .cat-btn{padding:10px 12px;font-size:0.85rem}
+      .name{font-size:0.9rem;text-decoration:none;color:var(--accent)}
+      a.name:hover, a.name:active { text-decoration: none !important; color: var(--accent) !important; }
+      .badge{font-size:10px}
+    }
+
+    /* Landscape mode adjustments */
+    @media (max-height:500px){
+      header.app-header{padding:12px}
+      .hero h2{font-size:1.3rem;margin-bottom:4px}
+      .hero p{display:none}
+      .grid{gap:12px}
+      .card{border-radius:10px}
+    }
+
+    /* Ensure the inserted logo image scales and preserves rounded corners */
+    .logo img{display:block;width:100%;height:100%;object-fit:cover;border-radius:12px;filter:drop-shadow(0 12px 36px rgba(0,255,120,0.22))}
+
+    /* Animations: neon pulse, hue shift, scroll reveal and progress bar */
+    @keyframes neon-pulse { 0% { filter: drop-shadow(0 0 6px rgba(0,255,85,0.6)) saturate(1.2); transform: translateZ(0) scale(1); } 50% { filter: drop-shadow(0 0 18px rgba(0,255,85,0.95)) saturate(1.6); transform: translateZ(0) scale(1.02); } 100% { filter: drop-shadow(0 0 6px rgba(0,255,85,0.6)) saturate(1.2); transform: translateZ(0) scale(1); } }
+    @keyframes hue-rotate { 0% { filter: hue-rotate(0deg); } 50% { filter: hue-rotate(60deg); } 100% { filter: hue-rotate(0deg); } }
+
+    .pulse { animation: neon-pulse 2.6s ease-in-out infinite; }
+    .hue-animate { animation: hue-rotate 8s linear infinite; }
+
+    /* Scroll reveal defaults */
+    .reveal-on-scroll { opacity: 0; transform: translateY(14px) scale(.995); transition: opacity 420ms ease, transform 520ms cubic-bezier(.2,.9,.2,1); will-change: opacity, transform; }
+    .reveal-on-scroll.revealed { opacity: 1; transform: translateY(0) scale(1); }
+
+    /* Utility to disable animations on an element */
+    .no-anim{ animation: none !important; transition: none !important; }
+    .no-anim *{ animation: none !important; transition: none !important; }
+    .cat-btn.no-anim{ transform: none !important; box-shadow: none !important; }
+
+    /* subtle entrance */
+    .fade-in{animation:fadeIn .5s cubic-bezier(.2,.8,.2,1) both}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    
+    /* Game mode change animations */
+    @keyframes gameCardEnter{from{opacity:0;transform:translateY(20px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+    .game-card-enter{animation:gameCardEnter .48s cubic-bezier(0.2,0.8,0.2,1) forwards}
+    
+    @keyframes gameModeExit{from{opacity:1}to{opacity:0}}
+    .game-mode-exit{animation:gameModeExit .25s ease-out forwards}
+    
+    /* Card entrance animation with stagger */
+    @keyframes cardEnter { from { opacity: 0; transform: translateY(12px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    /* highlight found card briefly */
+    .found-highlight{box-shadow:0 0 0 4px rgba(0,255,120,0.12), 0 18px 48px rgba(0,255,120,0.12)!important;transform:translate3d(0,-6px,0) scale(1.02)!important;transition:box-shadow .22s, transform .18s}
+    .card-enter { animation: cardEnter 0.45s cubic-bezier(.2,.8,.2,1) forwards; }
+
+    /* Progress bar */
+    #scroll-progress { position: fixed; left:0; top:0; height:4px; width:0%; z-index:9999; background: linear-gradient(90deg,var(--accent),var(--accent-2)); box-shadow: 0 2px 8px rgba(0,255,85,0.18); transition: width 120ms linear; }
+ 
+    /* Language selection animation */
+    .lang-toggle.lang-anim{animation:langSelectAnim .42s cubic-bezier(.2,.8,.2,1) both}
+    @keyframes langSelectAnim{0%{transform:translateY(0) scale(1);opacity:1}40%{transform:translateY(-6px) scale(1.06);opacity:1}100%{transform:none;opacity:1}}
+
+    /* Scroll-to-top button */
+    #scroll-top {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 12px 34px rgba(0,0,0,0.45);
+      transition: transform .18s ease, opacity .18s ease;
+      z-index: 9999;
+    }
+    #scroll-top:hover { transform: translateY(-2px); }
+    #scroll-top.show { display: flex; opacity: 1; }
+    #scroll-top.hide { opacity: 0; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="app-header fade-in">
+      <div class="brand">
+          <div class="logo"><img src="https://play-lh.googleusercontent.com/WNWZaxi9RdJKe2GQM3vqXIAkk69mnIl4Cc8EyZcir2SKlVOxeUv9tZGfNTmNaLC717Ht" alt="Roblox logo: stylized letter R in bold white displayed on a vibrant green gradient square background. The logo represents the Roblox gaming platform and serves as a recognizable brand identifier for the gaming portal." style="width:100%;height:100%;object-fit:contain;border-radius:8px"></div>
+        <div class="title"><h1>Roblox Games</h1><p>Curated collection — choose a category to explore</p></div>
+      </div>
+
+      <div class="controls">
+        <div class="search">
+          <input type="text" id="search-input" placeholder="Search games...">
+        </div>
+        <!-- language translation selector -->
+        <div id="lang-dropdown" class="lang-dropdown" role="application" style="margin-top:8px;max-width:600px;display:flex;align-items:center;gap:8px">
+        <button id="lang-toggle" class="lang-toggle" aria-haspopup="listbox" aria-expanded="false" style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.03);color:inherit;cursor:pointer">
+          <img id="current-flag" src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg" alt="US flag" style="width:26px;height:16px;border-radius:2px;object-fit:cover;box-shadow:0 1px 2px rgba(0,0,0,0.25)">
+          <span id="current-label" style="font-weight:600;color:var(--muted);font-size:1rem">English</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="opacity:.9"><polyline points="6 9 12 15 18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul id="lang-menu" class="lang-menu" role="listbox" aria-label="Choose language" style="list-style:none;margin:6px 0 0 0;padding:6px;border-radius:8px;background:rgba(0,0,0,0.9);border:1px solid rgba(255,255,255,0.03);position:absolute;display:none;z-index:999;min-width:160px">
+          <li role="option" data-lang="en" data-flag="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg" style="display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;color:#fff"> <img src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg" alt="US flag" style="width:26px;height:16px;object-fit:cover"> English</li>
+          <li role="option" data-lang="ru" data-flag="https://upload.wikimedia.org/wikipedia/en/f/f3/Flag_of_Russia.svg" style="display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;color:#fff"> <img src="https://upload.wikimedia.org/wikipedia/en/f/f3/Flag_of_Russia.svg" alt="Russia flag" style="width:26px;height:16px;object-fit:cover"> Русский</li>
+          <li role="option" data-lang="hy" data-flag="https://upload.wikimedia.org/wikipedia/commons/2/2f/Flag_of_Armenia.svg" style="display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;color:#fff"> <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Flag_of_Armenia.svg" alt="Armenia flag" style="width:26px;height:16px;object-fit:cover"> Հայերեն</li>
+        </ul>
+      </div>
+    </header>
+
+    <section class="hero wrap">
+      <div class="left">
+          <div class="categories" role="tablist" aria-label="Categories">
+          <button id="tycoon-btn" class="cat-btn">Tycoon</button>
+          <button id="simulator-btn" class="cat-btn">Simulator</button>
+          <button id="more-btn" class="cat-btn">Other</button>
+          <button id="donate-btn" class="cat-btn">Donate</button>
+          <button id="favorites-btn" class="cat-btn" style="display:none">Favorites</button>
+          <div id="list-status" aria-live="polite" style="margin-left:auto;color:var(--muted);font-size:0.95rem;white-space:nowrap"></div>
+        </div>
+      </div>
+    </section>
+
+    <main id="game-list" class="fade-in">
+      <div id="list-inner" class="grid"></div>
+    </main>
+
+
+
+  <script>
+      const games = {
+      tycoon: [
+        { name: { en: "🔨Super Mansion Tycoon 3", ru: "🔨Супер магнат особняк 3", hy: "🔨Սուպեր առանձնատուն տայկոն 3" }, url: "https://www.roblox.com/games/6082207596/Super-Mansion-Tycoon-3", image: "https://tr.rbxcdn.com/180DAY-4ca81b70e78856df6f4658a6f1e715c6/768/432/Image/Webp/noFilter", info: { en: "Build a mansion and become the richest tycoon.", ru: "Построй особняк и стань самым богатым магнатом.", hy: "Աշխարհի ամենահարուստ տայկոն դառնալ համար կառուցիր առանձնատուն." } },
+        { name: { en: "Slime Tycoon 🌴", ru: "Слизь Тайкун 🌴", hy: "Սլայմ Տայկոն 🌴" }, url: "https://www.roblox.com/games/3596472165/unnamed", image: "https://tr.rbxcdn.com/180DAY-bbf23f6600fe195d79cada0f8aabca7b/768/432/Image/Webp/noFilter", info: { en: "Collect slimes and expand your slime factory.", ru: "Собирай слизней и расширяй свою фабрику.", hy: "Տեսանելի սլայմեր հավաքիր ու ընդարձակիր ֆաբրիկան." } },
+        { name: { en: "Pet Tycoon 🐶", ru: "Питомец Тайкун 🐶", hy: "Ընդունիկ Տայկոն 🐶" }, url: "https://www.roblox.com/games/4853428294/Pet-Tycoon", image: "https://tr.rbxcdn.com/180DAY-4c6f4e789ee5f3519008b00da17caf5f/768/432/Image/Webp/noFilter", info: { en: "Raise pets and grow your pet empire.", ru: "Воспитывай питомцев и расширяй свою империю.", hy: "Սեփական կենդանիներ պահիր ու զարգացրու կայսրությունդ." } },
+        { name: { en: "Theme Park Tycoon 2", ru: "Парк Развлечений Тайкун 2", hy: "Թեմատիկ Պարկ Տայկոն 2" }, url: "https://www.roblox.com/games/69184822/Theme-Park-Tycoon-2", image: "https://tr.rbxcdn.com/180DAY-43ce23701dc7af2de45af720b32caf0c/768/432/Image/Webp/noFilter", info: { en: "Build rides and manage your amusement park.", ru: "Строй аттракционы и управляй парком развлечений.", hy: "Ուրախության այգի կառուցիր և կառավարիր այն." } },
+        { name: { en: "High School Tycoon 🏫", ru: "Старшая Школа Тайкун 🏫", hy: "Հիմնական Դպրոց Տայկոն 🏫" }, url: "https://www.roblox.com/games/2056512516/High-School-Tycoon", image: "https://tr.rbxcdn.com/180DAY-5cfef4f3454becd1591bca548ef69ffa/768/432/Image/Webp/noFilter", info: { en: "Design classrooms and grow your school empire.", ru: "Проектируй классы и развивай свою школу.", hy: "Դասասենյակներ կառուցիր և դպրոցակազմ զարգացրու." } },
+        { name: { en: "Military Warfare Tycoon", ru: "Военное Сражение Тайкун", hy: "Ռազմական Պատերազմ Տայկոն" }, url: "https://www.roblox.com/games/62124643/Military-Warfare-Tycoon", image: "https://tr.rbxcdn.com/180DAY-60396f0a4b1b1732f727442871adbdbc/768/432/Image/Webp/noFilter", info: { en: "Build an army base and conquer the battlefield.", ru: "Построй базу и захватывай поле боя.", hy: "Հրապարակ կառուցիր ու նվաճիր մարտադաշտը." } },
+        { name: { en: "Battleship Tycoon", ru: "Боевой Корабль Тайкун", hy: "Պատերազմական Նավ Տայկոն" }, url: "https://www.roblox.com/games/12953721/Battleship-Tycoon", image: "https://tr.rbxcdn.com/180DAY-f92301a51bb72d265ea00755b5c2f24a/768/432/Image/Webp/noFilter", info: { en: "Command a battleship fleet and become a sea tycoon.", ru: "Командуй флотом и стань морским магнатом.", hy: "Նավատորմ կառավարիր ու դառնա ծովի տայկոն." } },
+        { name: { en: "Bee Tycoon", ru: "Пчела Тайкун", hy: "Մեղու Տայկոն" }, url: "https://www.roblox.com/games/6323608050/2x-Money-Bee-Tycoon", image: "https://tr.rbxcdn.com/180DAY-9b887a2ad89ec03ec76514a0aeb27bbb/768/432/Image/Webp/noFilter", info: { en: "Harvest honey and grow your bee empire.", ru: "Собирай мёд и расширяй пчелиную империю.", hy: "Ստացիր մեղր և ընդարձակիր մեղրատունդ." } },
+        { name: { en: "Mall Tycoon", ru: "Торговый Центр Тайкун", hy: "Մոլ Տայկոն" }, url: "https://www.roblox.com/games/5736409216/Mall-Tycoon", image: "https://tr.rbxcdn.com/180DAY-abf48340e8d86a5a81e8ae3d7f99400c/768/432/Image/Webp/noFilter", info: { en: "Build shops and attract shoppers to your mall.", ru: "Строй магазины и привлекай покупателей.", hy: "Խանութներ կառուցիր ու գրիր գնորդներ." } },        
+        { name: { en: "Farm Tycoon!", ru: "Ферма Тайкун!", hy: "Սերմի Տայկոն!" }, url: "https://www.roblox.com/games/131682633990441/Farm-Tycoon", image: "https://tr.rbxcdn.com/180DAY-c75518aa3ebf1db2cf2f529bb3db0c45/768/432/Image/Webp/noFilter", info: { en: "Grow crops and manage your farm business.", ru: "Выращивай культуры и управляй фермой.", hy: "Բույսեր աճեցրու և ֆերման ղեկավարիր." } },
+        { name: { en: "Clone Tycoon", ru: "Клон Тайкун", hy: "Կլոն Տայկոն" }, url: "https://www.roblox.com/games/258094242/Clone-Tycoon", image: "https://tr.rbxcdn.com/180DAY-2feb02526b5f90587281e2569bf1c78d/768/432/Image/Webp/noFilter", info: { en: "Clone workers and expand your business.", ru: "Клонируй работников и расширяй дело.", hy: "Կլոններ ստեղծիր ու ընդարձակիր քո բիզնեսը." } },
+        { name: { en: "Christmas Presents Tycoon", ru: "Рождественские Подарки Тайкун", hy: "Նյութական Նվերների Տայկոն" }, url: "https://www.roblox.com/games/2617029443/Christmas-Presents-Tycoon", image: "https://tr.rbxcdn.com/180DAY-301caa81b51afda41249eee7ae729432/768/432/Image/Webp/noFilter", info: { en: "Deliver gifts and grow your holiday empire.", ru: "Доставляй подарки и расширяй праздничную империю.", hy: "Նվերներ տար և ընդարձակիր տոնական կայսրությունդ." } },
+        { name: { en: "2 Player Secret Hideout Tycoon", ru: "2 игрока Секретное Убежище Тайкун", hy: "2 խաղացողի Գաղտնի Պանօփտիկ Տայկոն" }, url: "https://www.roblox.com/games/136258770/2-Player-Secret-Hideout-Tycoon", image: "https://tr.rbxcdn.com/180DAY-610b6bd4ba6144bb1f6b5c219acf5189/768/432/Image/Webp/noFilter", info: { en: "Build a secret base with a friend.", ru: "Построй секретную базу с другом.", hy: "Գաղտնի բազա կառուցիր ընկերոջ հետ." } },
+        { name: { en: "Wizard Tycoon - Single Player", ru: "Волшебник Тайкун - Одиночная игра", hy: "Մոգ Տайկոն - Միակ Խաղացող" }, url: "https://www.roblox.com/games/416231150/Wizard-Tycoon-Single-Player", image: "https://tr.rbxcdn.com/180DAY-fd7f35c89ca1bbec9ebb7f67c7de27e2/768/432/Image/Webp/noFilter", info: { en: "Master magic and build your wizard kingdom.", ru: "Овладей магией и строй королевство.", hy: "Մոգություն տիրապետիր ու կառուցիր քո թագավորությունը." } },
+      ],
+      simulator: [
+        { name: { en: "Arm Wrestling Simulator", ru: "Симулятор Борьбы Рук", hy: "Ձեռքի Կռիվ Սիմուլյատոր" }, url: "https://tr.rbxcdn.com/180DAY-44448adc160191e5f779bdea1a782fc4/768/432/Image/Webp/noFilter", image: "https://tr.rbxcdn.com/180DAY-1ac6f6350f5b47dc3f386e754860b234/768/432/Image/Webp/noFilter", info: { en: "Strengthen your arm and out-push opponents.", ru: "Укрепляй руку и побеждай соперников.", hy: "Մարմնամարզիր բռունցդ ու զննիր մրցակիցներին." } },
+        { name: { en: "MAGNET SIMULATOR LEGENDS", ru: "МАГНИТ СИМУЛЯТОР ЛЕГЕНДЫ", hy: "ՄԱԳՆԻՏ ՍԻՄՈՒԼՅԱՏՈՐ ԼԵԳԵՆԴՆԵՐ" }, url: "https://www.roblox.com/games/95874782226839/MAGNET-SIMULATOR-LEGENDS", image: "https://tr.rbxcdn.com/180DAY-bfd619e632e61c23b68b889f5980a867/768/432/Image/Webp/noFilter", info: { en: "Collect magnets and level up your power.", ru: "Собирай магниты и повышай силу.", hy: "Ստացացվիր մագնիսներ ու բարձրացրու քո ուժը." } },
+        { name: { en: "[💰🍀x2] Magnet Simulator 2 ⚡", ru: "[💰🍀x2] Магнит Симулятор 2 ⚡", hy: "[💰🍀x2] Մագնետ Սիմուլյատոր 2 ⚡" }, url: "https://www.roblox.com/games/8592863835/Magnet-Simulator-2", image: "https://tr.rbxcdn.com/180DAY-0843f8e4b829738858d9da7efd849f89/768/432/Image/Webp/noFilter", info: { en: "Boost your magnet strength and collect rare items.", ru: "Усиль магнит и собирай редкие предметы.", hy: "Բարձրացրու մագնետդ ու հավաքիր հազվադեպ իրեր." } },
+      ],
+      more: [
+        { name: { en: "Obby But You're a Truck 🚢⛰️", ru: "Обби, но ты грузовик 🚢⛰️", hy: "Օբբի, բայց դու մեքենա ես 🚢⛰️" }, url: "https://www.roblox.com/games/14705961406/Obby-But-Youre-a-Truck", image: "https://tr.rbxcdn.com/180DAY-50a9c221aac9f684b45dc10ed27f768d/768/432/Image/Webp/noFilter", info: { en: "Navigate obstacle courses while driving a truck.", ru: "Преодолевай препятствия за рулем грузовика.", hy: "Ծաղիկներ կառուցիր վարելով տրակտորով։" } },
+        { name: { en: "Off-Roading Epic", ru: "Эпический Внедорожник", hy: "Էպիկ Ճանապարհից դուրս" }, url: "https://www.roblox.com/games/6366329104/Off-Roading-Epic", image: "https://tr.rbxcdn.com/180DAY-29fb223ad3e52abe6d6cd98280330136/768/432/Image/Webp/noFilter", info: { en: "Drive over rough terrain in powerful vehicles.", ru: "Езжай по бездорожью на мощных машинах.", hy: "Ճանապարհից դուրս վարորդություն, կարող ուժեղ մեքենաներով։" } },
+        { name: { en: "Disaster Island Survival 🏝️", ru: "Выживание на Острове Бедствия 🏝️", hy: "Աղետի Կղզի Գոյատևում 🏝️" }, url: "https://www.roblox.com/games/14833592591/Disaster-Island-Survival", image: "https://tr.rbxcdn.com/180DAY-1406cb496e6cae9b8d23f19fb0315d08/768/432/Image/Webp/noFilter", info: { en: "Survive natural disasters on a remote island.", ru: "Выживай в природных катастрофах на острове.", hy: "Գոյատևիր աղետներում մեկուսացված կղզում։" } },
+        { name: { en: "🌊Tsunami Disaster Survival🌊", ru: "Цунами Выживание При Бедствии", hy: "Ծովառաջ Աղետի Գոյատևում" }, url: "https://www.roblox.com/games/8846144215/Tsunami-Disaster-Survival", image: "https://tr.rbxcdn.com/180DAY-70d0329d7ad950bf3d7329f6bfcbca2a/768/432/Image/Webp/noFilter", info: { en: "Escape waves and rebuild after a tsunami.", ru: "Убегай от волн и восстанавливайся после цунами.", hy: "Խուսափիր ալիքներից և վերակառուցիր ծովառաջից հետո։" } },
+        { name: { en: "American Offroad Delivery", ru: "Американская Доставка Внедорожника", hy: "Ամերիկյան Ճանապարհից դուրս Առաքում" }, url: "https://www.roblox.com/games/125409034182344/American-Offroad-Delivery", image: "https://tr.rbxcdn.com/180DAY-c4b6b9de93c511f263047706f8b94453/768/432/Image/Webp/noFilter", info: { en: "Deliver packages across rugged landscapes.", ru: "Доставляй посылки по бездорожью.", hy: "Տվիր փաթեթներ բարդ լանդշաֆտներում։" } },
+        { name: { en: "Escape The Lava", ru: "Сбежать от Лавы", hy: "Գողանալ Լավայից" }, url: "https://www.roblox.com/games/140481779622210/Escape-The-Lava", image: "https://tr.rbxcdn.com/180DAY-d55e0447136620c4251053dc3221ab24/768/432/Image/Webp/noFilter", info: { en: "Run from rising lava and stay alive.", ru: "Беги от лавы и оставайся в живых.", hy: "Թռչիր լովայից ու մնա ողջ։" } },
+        { name: { en: "Cart Ride Simulator", ru: "Симулятор Катания на Тележке", hy: "Արջի Տարրալիկ Սիմուլյատոր" }, url: "https://www.roblox.com/games/11806348769/Cart-Ride-Simulator", image: "https://tr.rbxcdn.com/180DAY-5d18c8fe3c2975e9fb528e18e19d0c4b/768/432/Image/Webp/noFilter", info: { en: "Take a fun ride and collect rewards.", ru: "Прокатись и собирай награды.", hy: "Ցուցադրել զվարճալի ուղևորություն, հավաքիր պարգևներ։" } },
+        { name: { en: "✈️ Cabin Crew Simulator", ru: "Симулятор Кабинного Экипажа", hy: "Կաբին Անձնակազմի Սիմուլյատոր" }, url: "https://www.roblox.com/games/5171347293/Cabin-Crew-Simulator", image: "https://tr.rbxcdn.com/180DAY-2a25dc52c65ef6f177ef431c40480fec/768/432/Image/Webp/noFilter", info: { en: "Manage an airplane cabin as part of a crew.", ru: "Управляй салоном самолета в экипаже.", hy: "Կառավարիր ինքնաթիռի նստատեղերը անձնակազմի հետ։" } },
+      ],
+      donate: [
+         { name: { en: "Donate Game 💸", ru: "Игра Пожертвования 💸", hy: "Դրամ Խաղ 💸" }, url: "https://www.roblox.com/games/6652551895/Donate-Game", image: "https://tr.rbxcdn.com/180DAY-5f270feb333c32142f24cd027c66db79/768/432/Image/Webp/noFilter", info: { en: "Donate to support the creator.", ru: "Пожертвуйте, чтобы поддержать создателя.", hy: "Նվիրատվություն կատարել հնարողին աջակցելու համար." } },
+         { name: { en: "PLS DONATE 💸", ru: "ПОЖАЛУЙСТА ПОЖЕРТВУЙТЕ 💸", hy: "ԽՆԴՐՈՒՄ ԵՄ ԴՐԱՄ 💸" }, url: "https://www.roblox.com/games/8737602449/PLS-DONATE", image: "https://tr.rbxcdn.com/180DAY-8794aa86704027aa344839d600a949d2/768/432/Image/Webp/noFilter", info: { en: "Show support by donating a few Robux.", ru: "Поддержите, пожертвовав немного Robux.", hy: "Ազատություն ցույց տվեք՝ նվիրաբերելով մի փոքր Robux։" } },
+      ]
+    };
+
+    // Translations
+    const translations = {
+      en: {
+        title: 'Roblox Games',
+        subtitle: 'A selection of popular Roblox games — choose a category below',
+        tycoon: 'Tycoon Games',
+        favorites: 'Favorites',
+        simulator: 'Simulator Games',
+        more: 'Other games',
+        donate: 'Donate Games',
+        searchPlaceholder: 'Search games...',
+        count: '{n} games',
+        showing: 'Showing {n} games',
+        noGames: 'Select game mode',
+        noResults: 'No games found',
+        noInfo: 'No information available',
+        info: 'Info',
+        open: 'Open',
+        copyLink: 'Copy link',
+        copied: 'Copied!',
+        guest: 'Guest'
+      },
+      ru: {
+        title: 'Roblox Игры',
+        subtitle: 'Подборка популярных игр Roblox — выберите категорию ниже',
+        tycoon: 'Магнаты',
+        favorites: 'Избранное',
+        simulator: 'Симуляторы',
+        more: 'Другие игры',
+        donate: 'Пожертвовать игры',
+        searchPlaceholder: 'Поиск игр...',
+        count: '{n} игр',
+        showing: 'Показано {n} игр',
+        noGames: 'Выберите режим игры',
+        noResults: 'Игры не найдены',
+        noInfo: 'Информация недоступна',
+        info: 'Инфо',
+        open: 'Открыть',
+        copyLink: 'Скопировать ссылку',
+        copied: 'Скопировано!',
+        guest: 'Гость'
+      },
+      hy: {
+        title: 'Roblox խաղեր',
+        subtitle: 'Հանրաճանաչ Roblox խաղերի ընտրանի — ներքևից ընտրեք բաժինը',
+        tycoon: 'Տայկոն խաղեր',
+        favorites: 'Ընտրյալներ',
+        simulator: 'Սիմուլյատորներ',
+        more: 'Այլ խաղեր',
+        donate: 'Դոնատ խաղեր',
+        searchPlaceholder: 'Փնտրել խաղեր...',
+        count: '{n} խաղ',
+        showing: 'Ցուցադրվում է {n} խաղ',
+        noGames: 'Ընտրեք խաղի ռեժիմ',
+        noResults: 'Խաղեր չեն գտվել',
+        noInfo: 'Տեղեկությունները մատչելի չեն',
+        info: 'Տեղեկություններ',
+        open: 'Բացել',
+        copyLink: 'Պատճենել հղումը',
+        copied: 'Պատճենվեց!',
+        guest: 'Հյուր'
+      }
+    };
+
+    // Default language forced to English by user request
+    let currentLang = 'en';
+
+    let currentKey = null;
+    let favoritesSet = new Set();
+
+    function setActive(btn){
+      document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+      if (btn && btn.classList) btn.classList.add('active');
+    }
+
+    function showCategory(key){
+      if (!key) return;
+      currentKey = key;
+      try { localStorage.setItem('lastCategory', key); } catch(e){}
+      applyFilter();
+    }
+
+    function applyFilter(){
+      const queryRaw = document.getElementById('search-input').value || '';
+      const query = queryRaw.toLowerCase().trim();
+
+      const matchesQuery = (game) => {
+        if (!query) return true;
+        const names = [];
+        if (typeof game.name === 'string') names.push(game.name);
+        else if (game.name && typeof game.name === 'object') {
+          Object.values(game.name).forEach(v => { if (typeof v === 'string') names.push(v); });
+        }
+        names.push(game.url || '');
+        return names.some(n => (n||'').toLowerCase().includes(query));
+      };
+
+      let list = [];
+
+      // If searching, always search across all categories (except favorites mode which only searches favorites)
+      if (query && currentKey !== 'favorites') {
+        for (const key in games) {
+          list = list.concat(games[key]);
+        }
+      } else if (currentKey === 'favorites') {
+        // show all games that are favorited
+        for (const key in games) {
+          list = list.concat(games[key].filter(g => isFavorite(g)));
+        }
+      } else if (currentKey) {
+        list = games[currentKey] || [];
+      } else {
+        // if no category selected, search all
+        for (const key in games) {
+          list = list.concat(games[key]);
+        }
+      }
+
+      list = list.filter(matchesQuery);
+
+      renderGameListDOM(list);
+    }
+
+    // attach click handlers to category buttons
+    document.querySelectorAll('.cat-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key = btn.id.replace('-btn','');
+        showCategory(key);
+        setActive(btn);
+      });
+    });
+
+    // search input handler
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+      searchInput.addEventListener('input', debounce(applyFilter, 300));
+    }
+
+
+
+    // smarter fuzzy-matching plot identifier that returns match + category + score
+    function levenshtein(a, b){
+      if (!a || !b) return (a===b)?0:Math.max(a.length,b.length);
+      const A = a.split(''); const B = b.split('');
+      const m = A.length, n = B.length; const dp = Array.from({length:m+1}, ()=>Array(n+1).fill(0));
+      for (let i=0;i<=m;i++) dp[i][0]=i;
+      for (let j=0;j<=n;j++) dp[0][j]=j;
+      for (let i=1;i<=m;i++){
+        for (let j=1;j<=n;j++){
+          const cost = A[i-1]===B[j-1]?0:1;
+          dp[i][j] = Math.min(dp[i-1][j]+1, dp[i][j-1]+1, dp[i-1][j-1]+cost);
+        }
+      }
+      return dp[m][n];
+    }
+
+    function trigrams(s){
+      const t = s.replace(/\s+/g,' ');
+      const out = new Set();
+      for (let i=0;i<t.length-2;i++) out.add(t.slice(i,i+3));
+      return out;
+    }
+
+    function normalizeWords(s){
+      return (s||'').toLowerCase().replace(/[^a-z0-9\s]+/g,' ').split(/\s+/).filter(Boolean);
+    }
+
+    function guessGame(plot){
+      const raw = (plot||'').toLowerCase().trim();
+      if (!raw) return null;
+
+      // If input is in a localized language (ru/hy), try to replace known localized game names
+      // with their English equivalents so fuzzy matching works against English titles.
+      let englishText = raw;
+      if (currentLang && currentLang !== 'en') {
+        for (const key in games) {
+          for (const g of games[key]) {
+            const local = (typeof g.name === 'string') ? g.name : (g.name && g.name[currentLang]) || '';
+            const en = (typeof g.name === 'string') ? g.name : (g.name && g.name.en) || '';
+            if (local && en) {
+              const ln = local.toLowerCase();
+              const esc = ln.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+              englishText = englishText.replace(new RegExp(esc, 'g'), en.toLowerCase());
+            }
+          }
+        }
+      }
+
+      const plotWords = normalizeWords(englishText);
+      const plotTris = trigrams(englishText);
+
+      let best = { key: null, game: null, score: 0 };
+
+      for (const key in games) {
+        for (const g of games[key]) {
+          const enName = (typeof g.name === 'string') ? g.name : (g.name && g.name.en) || '';
+          const enLower = enName.toLowerCase();
+          const localName = (typeof g.name === 'string') ? g.name : (g.name && g.name[currentLang]) || '';
+          const localLower = (localName || '').toLowerCase();
+
+          // exact localized match or exact English match -> highest confidence
+          if ((localLower && raw.includes(localLower)) || englishText.includes(enLower) || enLower.includes(englishText)) {
+            return { key, game: g, score: 999 };
+          }
+
+          const nameWords = normalizeWords(enLower);
+          // token overlap (against English-translated plot)
+          let overlap = 0;
+          for (const w of nameWords){ if (plotWords.includes(w)) overlap += 1; }
+
+          // levenshtein similarity (normalized) against English names
+          const levDist = levenshtein(englishText, enLower);
+          const levMax = Math.max(englishText.length, enLower.length) || 1;
+          const levSim = 1 - (levDist / levMax);
+
+          // trigram similarity
+          const nameTris = trigrams(enLower);
+          const inter = Array.from(nameTris).filter(t=>plotTris.has(t)).length;
+          const uni = new Set([...nameTris, ...plotTris]).size || 1;
+          const triSim = inter / uni;
+
+          let score = (overlap * 18) + (levSim * 36) + (triSim * 28);
+
+          // boost for shared keywords
+          if (enLower.includes('tycoon')) {
+            if (englishText.includes('tycoon') || raw.includes('магнат') || raw.includes('тайкун') || raw.includes('տայկոն')) score += 8;
+          }
+          if (enLower.includes('simulator') || enLower.includes('sim')){
+            if (englishText.includes('sim') || raw.includes('сим') || raw.includes('սիմուլ')) score += 8;
+          }
+
+          if (score > best.score){ best = { key, game: g, score }; }
+        }
+      }
+      return best.game ? best : null;
+    }
+
+    // Translate localized game names within text to English, handling punctuation/emoji
+    function translateGameNamesToEnglish(text){
+      if (!text) return text;
+      let result = text;
+      // helper to normalize (remove emojis, punctuation except spaces)
+      const normalize = (s) => (s||'').toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, ' ').replace(/\s+/g, ' ').trim();
+      for (const key in games){
+        for (const g of games[key]){
+          const en = (typeof g.name === 'string') ? g.name : (g.name && g.name.en) || '';
+          ['ru','hy'].forEach(lang=>{
+            const local = (typeof g.name === 'string') ? g.name : (g.name && g.name[lang]) || '';
+            if (local && en){
+              const normLocal = normalize(local);
+              const normResult = normalize(result);
+              // if the normalized local name appears in normalized text, replace all occurrences with English
+              if (normLocal && normResult.includes(normLocal)){
+                // perform case-insensitive replacement on original result using word boundaries
+                const pattern = normLocal.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+                const regex = new RegExp('\\b' + pattern + '\\b', 'gi');
+                result = result.replace(regex, en);
+              }
+            }
+          });
+        }
+      }
+      return result;
+    }
+
+    // Split input into multiple possible game mentions (e.g. "zombie tycoon joins bee tycoon")
+    function parseMultipleGames(text){
+      if (!text) return [];
+      // split on common connectors and clean fragments (remove trailing verbs/connectors)
+      const parts = text.split(/\s+(?:joins?|and|,|vs|v|meets?|with)\s+/i).map(s=>s.trim()).filter(Boolean);
+      const clean = parts.map(p=>{
+        // remove trailing connector-like words that may appear at end (e.g. "bee tycoon joins")
+        return p.replace(/\b(?:joins|join|meets|meet|with|and|vs|v)\b[\W_]*$/i, '').trim();
+      }).filter(Boolean);
+      return clean;
+    }
+
+    // language selector (custom flag + name dropdown)
+    const langToggle = document.getElementById('lang-toggle');
+    const langMenu = document.getElementById('lang-menu');
+    const langFlag = document.getElementById('lang-flag');
+    const langLabel = document.getElementById('lang-label');
+
+    function setLangUI(lang){
+      const map = {
+        en: { src: 'https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg', label: 'English' },
+        ru: { src: 'https://upload.wikimedia.org/wikipedia/en/f/f3/Flag_of_Russia.svg', label: 'Русский' },
+        hy: { src: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Flag_of_Armenia.svg', label: 'Հայերեն' }
+      };
+      const info = map[lang] || map.en;
+      // update whichever flag/label IDs are present (support multiple markup variants)
+      const f1 = document.getElementById('lang-flag');
+      const l1 = document.getElementById('lang-label');
+      const f2 = document.getElementById('current-flag');
+      const l2 = document.getElementById('current-label');
+      if (f1) f1.src = info.src;
+      if (l1) l1.innerText = info.label;
+      if (f2) f2.src = info.src;
+      if (l2) l2.innerText = info.label;
+      if (langMenu) Array.from(langMenu.querySelectorAll('li[data-lang]')).forEach(li => li.setAttribute('aria-selected', li.dataset.lang === lang ? 'true' : 'false'));
+      try{ localStorage.setItem('lang', JSON.stringify(lang)); } catch(e){}
+    }
+
+    function applyTranslations(){
+      const t = translations[currentLang];
+      document.title = t.title;
+      document.querySelector('.title h1').innerText = t.title;
+      document.querySelector('.title p').innerText = t.subtitle;
+      // update hero
+      const heroH2 = document.querySelector('.hero h2');
+      if (heroH2) heroH2.innerText = t.title;
+      const heroP = document.querySelector('.hero p');
+      if (heroP) heroP.innerText = t.subtitle;
+      // update category button labels to localized short text
+      try{
+        const ty = document.getElementById('tycoon-btn'); if (ty) ty.innerText = t.tycoon || ty.innerText;
+        const fav = document.getElementById('favorites-btn'); if (fav) fav.innerText = t.favorites || fav.innerText;
+        const sim = document.getElementById('simulator-btn'); if (sim) sim.innerText = t.simulator || sim.innerText;
+        const more = document.getElementById('more-btn'); if (more) more.innerText = t.more || more.innerText;
+        const donate = document.getElementById('donate-btn'); if (donate) donate.innerText = t.donate || donate.innerText;
+      } catch(e){}
+      // plot UI translations
+      const searchInput = document.getElementById('search-input');
+      if (searchInput) searchInput.placeholder = t.searchPlaceholder || 'Search games...';
+      setLangUI(currentLang);
+      document.documentElement.lang = currentLang;
+      showCategory(currentKey);
+    }
+
+    // dropdown behavior
+    if (langToggle && langMenu){
+      langToggle.addEventListener('click', (e)=>{
+        const computed = window.getComputedStyle(langMenu).display;
+        const isHidden = computed === 'none' || langMenu.style.display === 'none';
+        if (isHidden) { langMenu.style.display = 'block'; langToggle.setAttribute('aria-expanded','true'); }
+        else { langMenu.style.display = 'none'; langToggle.setAttribute('aria-expanded','false'); }
+      });
+
+      langMenu.addEventListener('click', (e)=>{
+        const li = e.target.closest('li[data-lang]');
+        if (!li) return;
+        currentLang = li.dataset.lang;
+        setLangUI(currentLang);
+        applyTranslations();
+        // trigger selection animation on the toggle
+        if (langToggle){
+          langToggle.classList.remove('lang-anim');
+          // force reflow to restart animation
+          void langToggle.offsetWidth;
+          langToggle.classList.add('lang-anim');
+          const onEnd = ()=>{ langToggle.classList.remove('lang-anim'); langToggle.removeEventListener('animationend', onEnd); };
+          langToggle.addEventListener('animationend', onEnd);
+        }
+        langMenu.style.display = 'none';
+        langToggle.setAttribute('aria-expanded','false');
+      });
+
+      document.addEventListener('click', (e)=>{
+        if (!e.target.closest || !e.target.closest('.lang-dropdown')){
+          langMenu.style.display = 'none';
+          if (langToggle) langToggle.setAttribute('aria-expanded','false');
+        }
+      });
+    }
+
+    const $ = (s, el=document)=> el.querySelector(s);
+    const $$ = (s, el=document)=> Array.from((el||document).querySelectorAll(s));
+
+    function debounce(fn, wait){
+      let t;
+      return function(...args){
+        clearTimeout(t);
+        t = setTimeout(()=> fn.apply(this, args), wait);
+      };
+    }
+
+    function throttle(fn, wait){
+      let last = 0;
+      return function(...args){
+        const now = Date.now();
+        if (now - last >= wait){
+          last = now;
+          fn.apply(this, args);
+        }
+      };
+    }
+
+    function saveState(key, value){
+      try{ localStorage.setItem(key, JSON.stringify(value)); } catch(e){}
+    }
+
+    function loadState(key, fallback){
+      try{
+        const v = localStorage.getItem(key);
+        return v ? JSON.parse(v) : fallback;
+      } catch(e){ return fallback; }
+    }
+
+    function loadFavorites(){
+      const saved = loadState('favorites', []);
+      return new Set(Array.isArray(saved) ? saved : []);
+    }
+
+    function updateFavoritesButtonVisibility(){
+      const btn = document.getElementById('favorites-btn');
+      if (!btn) return;
+      btn.style.display = favoritesSet.size > 0 ? '' : 'none';
+    }
+
+    function saveFavorites(){
+      try{ saveState('favorites', Array.from(favoritesSet)); } catch(e){}
+      updateFavoritesButtonVisibility();
+    }
+
+    function isFavorite(game){
+      const id = (game && (game.url || (typeof game.name === 'string' ? game.name : game.name && game.name.en))) || '';
+      return !!(id && favoritesSet.has(id));
+    }
+
+    function toggleFavorite(game){
+      const id = (game && (game.url || (typeof game.name === 'string' ? game.name : game.name && game.name.en))) || '';
+      if (!id) return;
+      const isNowFavorited = !favoritesSet.has(id);
+      if (favoritesSet.has(id)) favoritesSet.delete(id);
+      else favoritesSet.add(id);
+      saveFavorites();
+
+      // When a game is favorited, show the Favorites tab and switch to it.
+      // If the last favorite is removed, fall back to Tycoon view.
+      const favBtn = document.getElementById('favorites-btn');
+      if (favBtn && favoritesSet.size > 0) {
+        currentKey = 'favorites';
+        setActive(favBtn);
+        showCategory('favorites');
+      } else if (favoritesSet.size === 0) {
+        currentKey = 'tycoon';
+        const tyBtn = document.getElementById('tycoon-btn');
+        if (tyBtn) setActive(tyBtn);
+        showCategory('tycoon');
+      } else {
+        applyFilter();
+      }
+    }
+
+    function createEl(tag, attrs={}, children = []){
+      const el = document.createElement(tag);
+      Object.keys(attrs).forEach(k=>{
+        if (k === 'class') el.className = attrs[k];
+        else if (k === 'text') el.textContent = attrs[k];
+        else el.setAttribute(k, attrs[k]);
+      });
+      (Array.isArray(children)?children:[children]).forEach(c=>{ if (!c) return; if (typeof c === 'string') el.insertAdjacentHTML('beforeend', c); else el.appendChild(c); });
+      return el;
+    }
+
+    function updateListStatus(count){
+      const statusEl = document.getElementById('list-status');
+      if (!statusEl) return;
+      // Removed status text display
+      statusEl.innerText = '';
+    }
+
+    function renderGameListDOM(list){
+      const inner = document.getElementById('list-inner');
+      inner.innerHTML = '';
+      updateListStatus(list.length);
+      list.forEach((game, index) => {
+        const displayName = ((typeof game.name === 'string') ? game.name : (currentLang && game.name[currentLang]) || (game.name && game.name.en) || '');
+        const displayUrl = game.url || '#';
+        const displayImage = game.image || '';
+        const card = createEl('article', { class: 'card game-card-enter' });
+        card.setAttribute('data-title', displayName.toLowerCase());
+        card.style.animationDelay = (index * 0.05) + 's';
+
+        const thumb = createEl('a', { class: 'thumb', href: displayUrl, target: '_blank', rel: 'noopener noreferrer', style: `background-image:url('${displayImage}');` });
+        card.appendChild(thumb);
+
+        const body = createEl('div', { class: 'card-body' });
+        const meta = createEl('div', { class: 'meta' });
+        const name = createEl('a', { class: 'name', href: displayUrl, target: '_blank', rel: 'noopener noreferrer', text: displayName });
+        meta.appendChild(name);
+
+        const favBtn = createEl('button', { class: 'fav-btn', type: 'button', 'aria-label': isFavorite(game) ? 'Remove favorite' : 'Add to favorites', text: isFavorite(game) ? '★' : '☆' });
+        favBtn.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); toggleFavorite(game); });
+        meta.appendChild(favBtn);
+
+        const badge = createEl('div', { class: 'badge', text: '' });
+
+        const actions = createEl('div', { class: 'card-actions' });
+        const t = translations[currentLang] || translations.en;
+        const infoBtn = createEl('button', { class: 'action-btn', type: 'button', text: t.info || 'Info' });
+        infoBtn.addEventListener('click', (e)=>{
+          e.preventDefault(); e.stopPropagation();
+          const infoText = (typeof game.info === 'string')
+            ? game.info
+            : ((game.info && (game.info[currentLang] || game.info.en)) || '');
+          const msg = infoText
+            || `${displayName}\n${displayUrl}`
+            || (t.noInfo || 'No information available');
+          alert(msg);
+        });
+        actions.appendChild(infoBtn);
+
+        body.appendChild(meta); body.appendChild(badge); body.appendChild(actions);
+        card.appendChild(body);
+
+        inner.appendChild(card);
+
+        // Add interactive parallax / tilt on pointer movement (respect reduced motion)
+        try{
+          const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (!prefersReduced) {
+            let raf = null;
+            const onMove = (e) => {
+              if (raf) cancelAnimationFrame(raf);
+              raf = requestAnimationFrame(()=>{
+                const rect = card.getBoundingClientRect();
+                const px = ((e.clientX || (e.touches && e.touches[0].clientX)) - rect.left) / rect.width;
+                const py = ((e.clientY || (e.touches && e.touches[0].clientY)) - rect.top) / rect.height;
+                const clampedX = Math.max(0, Math.min(1, px));
+                const clampedY = Math.max(0, Math.min(1, py));
+                const rotY = (clampedX - 0.5) * 12; // degrees
+                const rotX = (0.5 - clampedY) * 8;  // degrees
+                const scale = 1.04;
+                card.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(${scale})`;
+                // move background position for parallax feel
+                const posX = 50 + (clampedX - 0.5) * 12;
+                const posY = 50 + (clampedY - 0.5) * 8;
+                thumb.style.backgroundPosition = `${posX}% ${posY}%`;
+                thumb.style.transform = 'scale(1.06)';
+              });
+            };
+
+            const onEnter = ()=>{
+              card.style.transition = 'transform .18s cubic-bezier(0.2,0.8,0.2,1), box-shadow .28s';
+              thumb.style.transition = 'transform .24s cubic-bezier(0.2,0.8,0.2,1), background-position .24s';
+            };
+
+            const onLeave = ()=>{
+              if (raf) cancelAnimationFrame(raf); raf = null;
+              card.style.transform = '';
+              card.style.transition = '';
+              thumb.style.transform = '';
+              thumb.style.backgroundPosition = 'center';
+              thumb.style.transition = '';
+            };
+
+            card.addEventListener('pointermove', onMove);
+            card.addEventListener('pointerenter', onEnter);
+            card.addEventListener('pointerleave', onLeave);
+            // support touch end
+            card.addEventListener('touchmove', onMove, {passive:true});
+            card.addEventListener('touchend', onLeave);
+          }
+        }catch(e){}
+      });
+    }
+
+    /* ընտրյալները հեռացված են */
+
+    function prefetchUrl(url){
+      try{ const l = document.createElement('link'); l.rel = 'prefetch'; l.href = url; document.head.appendChild(l); } catch(e){}
+    }
+
+    function attachPrefetchHandlers(){
+      document.addEventListener('mouseover', throttle((e)=>{
+        const a = e.target.closest && e.target.closest('a');
+        if (a && a.href) prefetchUrl(a.href);
+      }, 200));
+    }
+
+    function exportCurrentList(){
+      const key = currentKey || 'all';
+      const payload = { key, list: games[key] || [] };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = `${key}-games.json`; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    }
+
+    function addUtilityControls(){
+      // կոմունալ կառավարման միջոցներ հեռացված են
+    }
+
+    /* Տոստ ծանուցում և ընտրյալների հաշվարկը հեռացված են հատկության հետ */
+
+    function initKeyboardShortcuts(){
+      document.addEventListener('keydown', (e)=>{
+        // Category shortcuts: 1=Tycoon, 2=Favorites, 3=Simulator, 4=Other, 5=Donate
+        if (/^[1-5]$/.test(e.key)){
+          const idx = parseInt(e.key, 10) - 1;
+          const btns = Array.from(document.querySelectorAll('.cat-btn'));
+          if (btns[idx]) btns[idx].click();
+          return;
+        }
+
+        // Focus search with '/'
+        if (e.key === '/' && !e.altKey && !e.ctrlKey && !e.metaKey) {
+          const input = document.getElementById('search-input');
+          if (input) {
+            e.preventDefault();
+            input.focus();
+          }
+          return;
+        }
+
+        // Clear search with Escape
+        if (e.key === 'Escape') {
+          const input = document.getElementById('search-input');
+          if (input && input.value) {
+            input.value = '';
+            applyFilter();
+          }
+          return;
+        }
+
+        // Open first result on Enter when search active
+        if (e.key === 'Enter') {
+          const input = document.getElementById('search-input');
+          if (input && input.value.trim()) {
+            const firstLink = document.querySelector('#list-inner a.name');
+            if (firstLink) {
+              firstLink.click();
+              e.preventDefault();
+            }
+          }
+        }
+      });
+    }
+
+    function initEnhancements(){
+      attachPrefetchHandlers();
+      addUtilityControls();
+      initKeyboardShortcuts();
+    }
+
+// Գլխավոր դիտ - ընտրել tycoon կատեգորիա սկզբում բեռնման ժամանակ
+    function init(){
+      // always start in English (ignore any saved language)
+      currentLang = 'en';
+      setLangUI(currentLang);
+      applyTranslations();
+      favoritesSet = loadFavorites();
+      updateFavoritesButtonVisibility();
+      // optionally hide language selector buttons entirely
+
+      // continue with rest of initialization
+      currentKey = 'tycoon';
+      const btn = document.getElementById('tycoon-btn');
+      if (btn) setActive(btn);
+      showCategory(currentKey);
+      initEnhancements();
+    }
+
+    if (document.readyState === 'loading') {
+      window.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+
+      // Շրջել գլխավորը երբ կոճակներն դիպչում են այն - իջեցնել երբ օգտվողը գլորում է
+      (function setupHideOnScroll(){
+        const hdr = () => document.querySelector('header.app-header');
+        const hero = () => document.querySelector('.hero');
+        function hideHeader(){
+          const h = hdr(); if (!h) return;
+          h.classList.add('hidden');
+        }
+        function showHeader(){
+          const h = hdr(); if (!h) return;
+          h.classList.remove('hidden');
+        }
+        function updateScrollBtn(){
+          const btn = document.getElementById('scroll-top');
+          if (!btn) return;
+          if (window.scrollY > 240) btn.classList.add('show');
+          else btn.classList.remove('show');
+        }
+        function onScroll(){
+          const h = hdr();
+          const heroEl = hero();
+          if (!h || !heroEl) return;
+          const heroRect = heroEl.getBoundingClientRect();
+          const headerHeight = h.getBoundingClientRect().height;
+          // Շրջել գլխավորը երբ հերոս բաժինի վերջը դիպչում է գլխավորի ներքևի եզրին
+          if (heroRect.top <= headerHeight) {
+            hideHeader();
+          } else {
+            showHeader();
+          }
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        updateScrollBtn();
+        const scrollBtn = document.getElementById('scroll-top');
+        if (scrollBtn) scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+      })();
+  </script>
+  <button id="scroll-top" aria-label="Scroll to top">↑</button>
+</body>
+</html>
