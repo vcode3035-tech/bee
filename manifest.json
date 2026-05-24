@@ -1,0 +1,20 @@
+{
+  "name": "Roblox Games — Curated Picks",
+  "short_name": "RobloxGames",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#00110a",
+  "theme_color": "#00110a",
+  "icons": [
+    {
+      "src": "https://play-lh.googleusercontent.com/WNWZaxi9RdJKe2GQM3vqXIAkk69mnIl4Cc8EyZcir2SKlVOxeUv9tZGfNTmNaLC717Ht",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://play-lh.googleusercontent.com/WNWZaxi9RdJKe2GQM3vqXIAkk69mnIl4Cc8EyZcir2SKlVOxeUv9tZGfNTmNaLC717Ht",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
