@@ -1,0 +1,634 @@
+﻿<!doctype html>
+<html lang="hy">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Սիտքոմներ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+   <style>
+    :root{
+      --bg-1: #0a1f0f;
+      --bg-2: #0d2910;
+      --glass: rgba(0,255,0,0.08);
+      --glass-2: rgba(0,255,0,0.036);
+      --accent: #00FF00; /* bright pure green */
+      --accent-2: #66FF99; /* light green */
+      --muted: rgba(153,255,153,0.95);
+      --card-radius: 16px;
+      color-scheme: dark;
+    }
+
+   *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;background:var(--bg-1);
+      font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial; color:var(--accent); -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;padding:32px;
+    }
+
+    .wrap{max-width:1200px;margin:0 auto}
+
+    header.app-header{
+      display:flex;align-items:center;gap:18px;justify-content:space-between;padding:18px;background:linear-gradient(180deg,var(--glass),transparent);border-radius:14px;border:1px solid rgba(255,255,255,0.03);backdrop-filter:blur(8px);
+      box-shadow:0 8px 30px rgba(2,10,30,0.6);
+    }
+
+      .brand{display:flex;align-items:center;gap:14px;flex:1;justify-content:center;}
+    .logo{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),var(--accent-2));border-radius:12px;display:grid;place-items:center;font-weight:700;color:#041018;box-shadow:0 12px 44px rgba(0,255,0,0.24), inset 0 0 14px rgba(0,255,0,0.08)}
+    .title h1{margin:0;margin-top:-20px;font-size:2rem;line-height:1;color:transparent;background:linear-gradient(90deg,var(--accent),var(--accent-2));background-clip:text;-webkit-background-clip:text;text-shadow:0 8px 22px rgba(0,255,0,0.08)}
+    .title p{margin:3px 0 0;font-size:0.9rem;color:var(--muted)}
+
+    .controls{display:flex;gap:12px;align-items:center}
+    .search{display:flex;align-items:center;gap:8px;background:var(--glass);padding:8px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    .search input{background:transparent;border:0;color:var(--accent);outline:none;padding:6px 8px;min-width:0;width:clamp(120px,34vw,220px)}
+
+    /* Channel buttons */
+    .channels{display:flex;gap:8px;align-items:center}
+    .cat-btn{background:transparent;border:1px solid rgba(0,255,0,0.06);color:var(--accent);padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:600;transition:background .4s,border-color .4s,color .4s}
+    .cat-btn.active{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#041018;border-color:rgba(0,255,0,0.16);box-shadow:0 8px 24px rgba(0,255,0,0.12)}
+
+    .hero{margin:28px 0 18px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .hero .left{flex:1}
+    .hero h2{margin:0;font-size:2.2rem;letter-spacing:-0.6px}
+    .hero p{margin:10px 0 0;color:var(--muted);max-width:60%}
+
+    main#game-list{margin-top:26px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+
+    .card{background:linear-gradient(180deg, rgba(0,40,20,0.4), rgba(255,255,255,0.01));border-radius:var(--card-radius);overflow:hidden;border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;transition:transform .6s,box-shadow .6s;backdrop-filter:blur(6px);touch-action:manipulation}
+    .card:hover{transform:translateY(-20px);background:linear-gradient(180deg, rgba(0,100,50,0.6), rgba(50,255,100,0.15));box-shadow:0 40px 120px rgba(0,255,0,0.35), 0 15px 50px rgba(0,0,0,0.8), inset 0 0 30px rgba(0,255,0,0.2);border-color:rgba(0,255,0,0.25)}
+    .thumb{height:auto;aspect-ratio:16/9;background-size:cover;background-position:center;width:100%}
+    .card-body{padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+    .meta{display:flex;align-items:center;justify-content:space-between}
+    .name{font-weight:700;font-size:1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none;color:transparent;background:linear-gradient(90deg,var(--accent),var(--accent-2));background-clip:text;-webkit-background-clip:text;}
+    .badge{font-size:12px;color:var(--muted)}
+    
+    /* Make card clickable as a link */
+    .card-link{display:flex;flex-direction:column;height:100%;text-decoration:none;color:inherit}
+
+
+    footer{margin-top:34px;text-align:center;color:rgba(255,255,255,0.45);font-size:13px}
+
+    @media (max-width:1000px){
+      .grid{grid-template-columns:repeat(2,1fr)}
+      .hero p{max-width:100%}
+      body{padding:24px}
+    }
+    @media (max-width:640px){
+      body{padding:16px}
+      .grid{grid-template-columns:1fr}
+      .hero{flex-direction:column;align-items:flex-start;gap:14px}
+      .hero h2{font-size:1.5rem}
+      .hero p{max-width:100%;font-size:0.95rem}
+      .wrap{padding:0}
+      header.app-header{border-radius:12px;padding:14px}
+
+    }
+
+    /* Mobile (small phones) tweaks */
+    @media (max-width:480px){
+      body{padding:10px;font-size:16px}
+      header.app-header{flex-direction:column;align-items:flex-start;gap:12px;padding:14px;border-radius:12px}
+      header.app-header .brand{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px}
+      .controls{width:100%;display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+      .search{flex:1;min-width:0;width:100%;min-height:44px;border-radius:10px}
+      .search input{width:100%;min-width:0;padding:10px 8px;font-size:16px}
+      .search svg{width:20px;height:20px}
+
+      .logo{width:26px;height:26px}
+      .hero{margin:16px 0 12px}
+      .hero h2{font-size:1.35rem;margin-bottom:8px}
+      .hero p{font-size:0.9rem}
+
+
+      .thumb{aspect-ratio:16/9;height:auto;min-height:100px}
+      .name{white-space:normal;font-size:0.95rem;line-height:1.3}
+      .card{border-radius:12px;gap:6px}
+      .card-body{padding:10px 12px;gap:6px}
+      .meta{gap:8px}
+      .badge{font-size:11px}
+    }
+
+    /* Extra mobile improvements: category scrolling, larger tap targets, responsive logo image */
+    @media (max-width:520px){
+
+
+
+
+
+      .open{padding:12px 14px;font-size:1rem}
+      .thumb{min-height:120px}
+      .card{border-radius:12px}
+    }
+
+    /* Extra small phones (under 360px) */
+    @media (max-width:360px){
+      body{padding:8px}
+      header.app-header{padding:12px;gap:10px}
+      .logo{width:20px;height:20px}
+      .title h1{font-size:1.1rem}
+      .title p{font-size:0.8rem}
+      .hero h2{font-size:1.2rem}
+      .search input{font-size:16px;padding:8px 6px}
+
+      .cat-btn{padding:10px 12px;font-size:0.85rem}
+      .name{font-size:0.9rem}
+      .badge{font-size:10px}
+    }
+
+    /* Landscape mode adjustments */
+    @media (max-height:500px){
+      header.app-header{padding:12px}
+      .hero h2{font-size:1.3rem;margin-bottom:4px}
+      .hero p{display:none}
+      .grid{gap:12px}
+      .card{border-radius:10px}
+    }
+
+    /* Ensure the inserted logo image scales and preserves rounded corners */
+    .logo img{display:block;width:100%;height:100%;object-fit:cover;border-radius:12px;filter:drop-shadow(0 12px 36px rgba(0,255,0,0.22))}
+
+    /* Animations: neon pulse, hue shift, scroll reveal and progress bar */
+    @keyframes neon-pulse { 0% { filter: drop-shadow(0 0 6px rgba(0,255,0,0.6)) saturate(1.2); transform: translateZ(0) scale(1); } 50% { filter: drop-shadow(0 0 18px rgba(0,255,0,0.95)) saturate(1.6); transform: translateZ(0) scale(1.02); } 100% { filter: drop-shadow(0 0 6px rgba(0,255,0,0.6)) saturate(1.2); transform: translateZ(0) scale(1); } }
+    @keyframes hue-rotate { 0% { filter: hue-rotate(0deg); } 50% { filter: hue-rotate(60deg); } 100% { filter: hue-rotate(0deg); } }
+
+    .pulse { animation: neon-pulse 5s ease-in-out infinite; }
+    .hue-animate { animation: hue-rotate 15s linear infinite; }
+
+    /* Scroll reveal defaults */
+    .reveal-on-scroll { opacity: 0; transform: translateY(14px) scale(.995); transition: opacity 800ms ease, transform 1000ms cubic-bezier(.2,.9,.2,1); will-change: opacity, transform; }
+    .reveal-on-scroll.revealed { opacity: 1; transform: translateY(0) scale(1); }
+
+    /* Utility to disable animations on an element */
+    .no-anim{ animation: none !important; transition: none !important; }
+    .no-anim *{ animation: none !important; transition: none !important; }
+    .cat-btn.no-anim{ transform: none !important; box-shadow: none !important; }
+
+    /* subtle entrance */
+    .fade-in{animation:fadeIn 1.2s ease both}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    
+    /* Game mode change animations */
+    @keyframes gameCardEnter{from{opacity:0;transform:translateY(20px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+    .game-card-enter{animation:gameCardEnter .8s cubic-bezier(0.2,0.8,0.2,1) forwards}
+    
+    @keyframes gameModeExit{from{opacity:1}to{opacity:0}}
+    .game-mode-exit{animation:gameModeExit .5s ease-out forwards}
+    
+    /* Card entrance animation with stagger */
+    @keyframes cardEnter { from { opacity: 0; transform: translateY(12px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .card-enter { animation: cardEnter 0.7s ease-out forwards; }
+
+    /* Progress bar */
+    #scroll-progress { position: fixed; left:0; top:0; height:4px; width:0%; z-index:9999; background: linear-gradient(90deg,var(--accent),var(--accent-2)); box-shadow: 0 2px 8px rgba(0,255,85,0.18); transition: width 120ms linear; }
+
+    /* Season selector */
+    .season-selector{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap}
+    .season-select{background:#000;border:1px solid rgba(0,255,120,0.2);color:var(--accent);padding:6px 10px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;color-scheme:dark}
+    .season-select:hover{background:#0a0a0a;border-color:rgba(0,255,120,0.4)}
+    .season-select option{background:#000;color:var(--accent)}
+
+    /* Modal styles */
+    .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:10000;align-items:center;justify-content:center}
+    .modal.active{display:flex}
+    .modal-content{background:linear-gradient(180deg,var(--glass),transparent);border-radius:16px;border:1px solid rgba(255,255,255,0.06);padding:24px;max-width:600px;max-height:80vh;overflow-y:auto;backdrop-filter:blur(8px);box-shadow:0 20px 60px rgba(0,0,0,0.8)}
+    .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+    .modal-title{font-size:1.3rem;font-weight:700;color:transparent;background:linear-gradient(90deg,var(--accent),var(--accent-2));background-clip:text;-webkit-background-clip:text}
+    .modal-close{background:transparent;border:1px solid rgba(0,255,120,0.2);color:var(--accent);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:18px;transition:background .18s}
+    .modal-close:hover{background:rgba(255,255,255,0.1)}
+    .seasons-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .season-item{background:rgba(0,50,35,0.4);border:1px solid rgba(0,255,120,0.12);border-radius:12px;padding:16px;cursor:pointer;transition:all .18s}
+    .season-item:hover{background:rgba(0,100,70,0.6);border-color:rgba(0,255,120,0.3);transform:translateY(-4px)}
+    .season-item-title{font-weight:700;color:var(--accent);margin-bottom:4px}
+    .season-item-link{font-size:12px;color:var(--muted)}
+    @media (max-width:600px){
+      .seasons-list{grid-template-columns:1fr}
+      .modal-content{padding:16px;max-width:90vw}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="app-header fade-in">
+      <div class="brand">
+        <div class="title"><h1>Սիտքոմներ</h1><p></p></div>
+      </div>
+
+      <div class="controls">
+        <div class="channels">
+          <button id="btn-armenia" class="cat-btn" data-channel="ArmeniaTV">ArmeniaTV</button>
+          <button id="btn-shant" class="cat-btn" data-channel="ShantTV">ShantTV</button>
+        </div>
+        <div class="search" role="search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="opacity:.9;color:var(--accent)"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-opacity=".7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-opacity=".7" stroke-width="1.6" fill="none"/></svg>
+          <input id="search" type="search" placeholder="Փնտրել սիտքոմը..." aria-label="Փնտրել սիտքոմը">
+        </div>
+      </div>
+    </header>
+
+    <section class="hero wrap">
+      <div class="left">
+      </div>
+    </section>
+
+
+    <main id="game-list" class="fade-in">
+      <div id="list-inner" class="grid"></div>
+  <script>
+    // Game data object containing all sitcoms with their details
+    const games = {
+      all: [
+         { name: "Լա Կասա Դե Պապա / La Casa De Papa", channel: "ArmeniaTV", image: "https://i.ytimg.com/vi/4fKeADAzpF4/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLB3OP0mlH-0Fo6sQvJYSftbQak_TA", seasons: [
+          { name: "Եթերաշրջան 1", url: "https://youtube.com/playlist?list=PLdsJ9bdP2I0bNRL1-fLVBF6Gry6-gMW5h&si=ac-_g91zlz75ZaPM", image: "https://i.ytimg.com/vi/4fKeADAzpF4/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLB3OP0mlH-0Fo6sQvJYSftbQak_TA" },
+          { name: "Եթերաշրջան 2", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGQA-Z2wKFbMT59K7Pa1-V7c&si=Qn4cqD2brhU1g1Q4  ", image: "https://i.ytimg.com/vi/QE8rHjgqQqM/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDTtS3XDHNKTkI_xuerjF5wGkcHfg" },
+          { name: "Եթերաշրջան 3", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGTMwJg9hcmCznTzcEyCqcPy&si=qkV40nBrwqkIyCo6", image: "https://i.ytimg.com/vi/cyCnwgDzqyY/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYciBUKD0wDw==&rs=AOn4CLAt2MnCgdFns8Snux1u1x_6UhV8lg" },
+          ]},
+         { name: "Ժառանգ80 / Zharang80", channel: "ArmeniaTV", image: "https://i.ytimg.com/vi/mwYSFZ2UbnM/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCMJo2W9wt7GlpF97gBvrKjsxasrQ", seasons: [
+          { name: "Եթերաշրջան 1", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGRVTjxKGN07iLKqBykmqIY1&si=91SRCFxLH9yrtj5J", image: "https://i.ytimg.com/vi/mwYSFZ2UbnM/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCMJo2W9wt7GlpF97gBvrKjsxasrQ" },
+          { name: "Եթերաշրջան 2", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGTNmu3mrqqDdPrAGb2ezeK8&si=eJlLQbOZDGSqgf0g", image: "https://i.ytimg.com/vi/zdbi35PNYjo/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYZSBeKFAwDw==&rs=AOn4CLDexwcCQuW9nkpXPK-BhVokLq4ajw" },
+          ]},
+         { name: "Սյուրպրիզ / Surprise", channel: "ArmeniaTV", image: "https://i.ytimg.com/vi/RgSwyi62C8Y/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4AdQGgALgA4oCDAgAEAEYZSBZKFEwDw==&rs=AOn4CLA2EsTd0VQl4UuFRsCqH7ZfHjGMxw", seasons: [
+          { name: "Եթերաշրջան 1", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGTTK8LRMukWoF22etanC3v1&si=oHMSpLYRBKrlem_E", image: "https://i.ytimg.com/vi/RgSwyi62C8Y/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4AdQGgALgA4oCDAgAEAEYZSBZKFEwDw==&rs=AOn4CLA2EsTd0VQl4UuFRsCqH7ZfHjGMxw" },
+          { name: "Եթերաշրջան 2", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGTyJvszPmP94__zIvZCOwSW&si=dicRqvKBdYYyjAGs", image: "https://i.ytimg.com/vi/Od97g-PFrxg/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYZSBlKGUwDw==&rs=AOn4CLDbjvGyQfbhzi8YU-aUCnJ_yMH_TA" },
+          { name: "Եթերաշրջան 3", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGT_d1KJwLstjbcTiXuFnp79&si=ttybV2mwoylEkQOw", image: "https://i.ytimg.com/vi/DoAzzbBSmUo/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBRrn8hXMhsomqWoW9leXARdLuMeA" },
+          { name: "Եթերաշրջան 4", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGSLIdiYXj52nPwNRQNG00kt&si=9FkA9Voim5q8FAoY", image: "https://i.ytimg.com/vi/hQiMEW-D1W4/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLChDcAcuvKZ98DG7ZAiYHyCMptuCg" },
+         ]},
+         { name: "Տատաստրոֆա / Tatastrofa", channel: "ArmeniaTV", image: "https://i.ytimg.com/vi/hExpY-WLnrY/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLA3iHHg7DSc1RMlZbmjm5Nm2iY5-Q", seasons: [
+          { name: "Եթերաշրջան 1", url: "https://youtube.com/playlist?list=PLOTl-rSp4UKesKHmwRK4StVT1_Her6hos&si=tUurGVVdSwhMAVFk" },
+       ]},
+        { name: "Հոպարի Գանձերը / Hopari Gandzery", channel: "ArmeniaTV", image: "https://i.ytimg.com/vi/bl59WZ6dTqo/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDdG0ZDnRuTGwuvvOquXVSHTUvYjw", seasons: [
+          { name: "Եթերաշրջան 1", url: "https://youtube.com/playlist?list=PLOTl-rSp4UKfWs_zaQU-vJJ143r_0sSXn&si=wm79JQzbj54GboJ4" },
+        ]},
+        { name: "Վարձով Ընտանիք / Vardzov Yntaniq", channel: "ArmeniaTV", image: "https://i.ytimg.com/vi/Dx4ekI5u8Y8/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYZSBeKEkwDw==&rs=AOn4CLD1_K8yf7e1Jo5yGAQeiWXL3af_Zw", seasons: [
+          { name: "Եթերաշրջան 1", url: "https://youtube.com/playlist?list=PLOTl-rSp4UKeaCkliSqPNuWjJ2PWrufmP&si=R6P1JDKboqIIqEin" },
+        ]},
+          { name: "Փող Չկա / Pogh Chka", channel: "ArmeniaTV", image: "https://i.ytimg.com/vi/zHjgDCsk0fg/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYQCBhKGUwDw==&rs=AOn4CLDzaSEmqeI9OLkK3WS7X2w6XesYuQ", seasons: [
+          { name: "Եթերաշրջան 1", url: "https://youtube.com/playlist?list=PLOTl-rSp4UKdGhEtVpx0vItD_LQOOj8JE&si=h4SMeh5p2tzUBq9k" },
+        ]},
+        { name: "Արտակարգ Արտակ / Artakarg Artak", channel: "ArmeniaTV", image: "https://i.ytimg.com/vi/CEcPwgfAimE/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYZSBOKE4wDw==&rs=AOn4CLAIVm40AOovnBEM8p529lo7GykM_g", seasons: [
+          { name: "Եթերաշրջան 1", url: "https://youtube.com/playlist?list=PLOTl-rSp4UKdOdtz9weu6nzE_EUnMS7Cm&si=a9EmBVcgNGfc4_7f" },
+        ]},
+         { name: "Վարչապետ 2050 / Varchapet 2050", channel: "ArmeniaTV", image: "https://i.ytimg.com/vi/dHSwTFS5rqE/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYNSBoKHIwDw==&rs=AOn4CLB6STuhDmij9N6KxRsSuj6Y7N7lAg", seasons: [
+          { name: "Եթերաշրջան 1", url: "https://youtube.com/playlist?list=PLOTl-rSp4UKeWuB2axA02FBO7LvmmTLji&si=Dk1qG1528lLYlTeq" },
+        ]},
+        { name: "Հյուրերն Անցյալից / Hyurern Ancyalic", channel: "ArmeniaTV", image: "https://i.ytimg.com/vi/HuTWWmcBKAI/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBhbtvBZ8eN4_CW1RVA_LffDBAwhQ", seasons: [
+          { name: "Եթերաշրջան 1", url: "https://youtube.com/playlist?list=PLOTl-rSp4UKcLzh2A7M0u0XTJKiO6owQc&si=pR2mVsxhnoMSdOwW" },
+        ]},
+        { name: "Սիրո Հասակ / Siro Hasak", channel: "ArmeniaTV", image: "https://i.ytimg.com/vi/pxfRJ0lv6OM/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCZ1OYpwlvbKlc_WLEfpHCJPTDl1w", seasons: [
+          { name: "Եթերաշրջան 1", url: "https://youtube.com/playlist?list=PLOTl-rSp4UKfipueQjAoW15KpoaB2kKDO&si=3qaONjZXltQmXvvT" },
+        ]},
+        { name: "5G Ընտանիք / 5G Yntaniq", channel: "ArmeniaTV", image: "https://i.ytimg.com/vi/El-yujBAlMg/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4AdQGgALgA4oCDAgAEAEYciBMKEAwDw==&rs=AOn4CLCVNQsh26ciSBSoSwMQHRda_tKFfw", seasons: [
+          { name: "Եթերաշրջան 1", url: "https://youtube.com/playlist?list=PLOTl-rSp4UKe4kCQpbTb0goXOBiu2kf5u&si=FjwAqVPxJtKIRAIq" },
+        ]},
+        { name: "Հարս Չկա / Hars Chka", channel: "ArmeniaTV", image: "https://i.ytimg.com/vi/3VN_NIydDCs/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDkSV4TYeO7_DSv099WRIONB9j76Q", seasons: [
+          { name: "Եթերաշրջան 1", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGQ4MKcXTMbuMlpvCOglHtjX&si=yYglE1wHLVKCaGX7", image: "https://i.ytimg.com/vi/3VN_NIydDCs/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDkSV4TYeO7_DSv099WRIONB9j76Q" },
+          { name: "Եթերաշրջան 2", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGRaQZ66rMVjJoYZeuhgCtOT&si=eIJeiXhBNaq8m0G_", image: "https://i.ytimg.com/vi/jB_OiT6UOmQ/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4AdQGgALgA4oCDAgAEAEYZSBaKFkwDw==&rs=AOn4CLBLkpYhHzeT-IYYIM_xFApNNHWSQA" },
+        ]},
+        { name: "Դեպի Ճամբար / Depi chambar", channel: "ArmeniaTV", image: "https://i.ytimg.com/vi/CIamRAKTQlE/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBHI2MB3K39VcmMyRq38OquEx_NOw", seasons: [
+          { name: "Եթերաշրջան 1", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGQMshPCDajBzGsB6PYh-d6q&si=sy9Oad9mSaoVFujA", image: "https://i.ytimg.com/vi/CIamRAKTQlE/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBHI2MB3K39VcmMyRq38OquEx_NOw" },
+          { name: "Եթերաշրջան 2", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGQ1CL98mXWH_DKrJuW3IVDv&si=0Irpvl_u7zRnUA_n", image: "https://i.ytimg.com/vi/p6eyY9z5U6I/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYZSBaKFcwDw==&rs=AOn4CLADZGtgxYgW-PmpHYieToFL6bX5Gw" },
+          { name: "Եթերաշրջան 3", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGQ0uY-eb6_efHhhWeTodmRU&si=Vn7yACi94GSYfTIs", image: "https://i.ytimg.com/vi/khSOVz-b3rA/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYUCBcKGUwDw==&rs=AOn4CLACAYJwgxN9HoqzhOkYlXNbRnwzsA"},
+          { name: "Եթերաշրջան 4", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGS4BP2ptC1TJXOkAbp-r6uM&si=KIi4EYX0PPRqPWGo", image: "https://i.ytimg.com/vi/msXbDIMUQLs/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLAOb6CEWEdduN0sXS9Z9RYXaa8Wog" },
+        ]},
+        { name: "Ֆեյք Մամա, Ֆեյք Պապա, Ֆեյք Գյուղապետ / Fake Mama, Fake Papa, Fake Gyughapet", channel: "ArmeniaTV", image: "https://i.ytimg.com/vi/fYB443TAZkc/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYfyATKCkwDw==&rs=AOn4CLDudCoCAfXjhqm7mAEz1Kr2g14pag", seasons: [
+          { name: "Ֆեյք Մամա", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGRv7fn0gU14CcteQrX_11i-&si=Js87XYasI9DRIk6L", image: "https://i.ytimg.com/vi/fYB443TAZkc/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYfyATKCkwDw==&rs=AOn4CLDudCoCAfXjhqm7mAEz1Kr2g14pag" },
+          { name: "Ֆեյք Պապա", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGTf47o7MplINhBkHKAnbKwA&si=xMMNI5yH7I5thWZ4", image: "https://i.ytimg.com/vi/GqEc9mfhIPU/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDjMkkWM9k9wJp1jHEo0jIUqITGgQ" },
+          { name: "Ֆեյք Գյուղապետ", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGTWDvkO0GSQ4myx_A73g2dC&si=QGn4zP2RovwBo99J", image: "https://i.ytimg.com/vi/6lG5zHUrBzE/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4AdQGgALgA4oCDAgAEAEYZSBZKFIwDw==&rs=AOn4CLCBdMU7lKLUH3JgpLP5OeVLKkeFVw" },
+        ]},
+        { name: "Ոսկե դպրոց / Voske Dproc", channel: "ArmeniaTV", image: "https://i.ytimg.com/vi/iynguWyzzVA/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYXyBlKE8wDw==&rs=AOn4CLAx0ONtEGPbwvqboLtoS3Ne23IvYQ", seasons: [
+          { name: "Եթերաշրջան 1", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGRIb6Dp1jmBdXBuV4_c7821&si=vcu_ZB2TatPXVBwN", image: "https://i.ytimg.com/vi/iynguWyzzVA/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYXyBlKE8wDw==&rs=AOn4CLAx0ONtEGPbwvqboLtoS3Ne23IvYQ" },
+          { name: "Եթերաշրջան 2", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGRL5KZZXFgmcuIIsjSyUHNt&si=vNNVu_vRvoXPPIvz", image: "https://i.ytimg.com/vi/k-oLu8y-Sn0/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYZSBlKGUwDw==&rs=AOn4CLBfGLv3JATUst8A1evbSFfS2q9y6A" },
+          { name: "Եթերաշրջան 3", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGSjdppp6OGswgUcBP_8TjX3&si=LE89z5MGmqCcwTel", image: "https://i.ytimg.com/vi/nkfdYUvKtV8/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4AdQGgALgA4oCDAgAEAEYciBDKCswDw==&rs=AOn4CLBDIA8wWKTcbv_t9WAh2pNboUYFsA" },
+        ]},
+        { name: "Ազիզյանները / Azizyanner", channel: "ArmeniaTV", image: "https://i.ytimg.com/vi/zcgLECBEgzM/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYISA5KH8wDw==&rs=AOn4CLCmfn-2ad6u0EOTUiOsd6-yMxg4CQ", seasons: [
+          { name: "Եթերաշրջան 1", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGR9NrfZQPUEh1IiQ3HRnHhJ&si=-xZLZ_JBdpObEqxE", image: "https://i.ytimg.com/vi/d6_2WQKbR2Q/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYZSBRKD4wDw==&rs=AOn4CLC8Hu1USqhhHZe9vcF7BQ81XG4t2A" },
+          { name: "Եթերաշրջան 2", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGROL3s3lk0AP0xEaMjIR5Hq&si=0Ex_WLtKr6sNeJcv", image: "https://i.ytimg.com/vi/-SCvLXNY8kY/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCJcTfgjEXQhiwOH3Qhry7NleDeAA" },
+          { name: "Եթերաշրջան 3", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGSTVBZE6Nx_hlTaYp0ntVgL&si=gpoObakAKlDtdLR4", image: "https://i.ytimg.com/vi/a37a0z3oZrg/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCcYp7ra0XDCKejUyXtsidTR-HlUA" },
+          { name: "Եթերաշրջան 4", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGRO2wxl_lbhCU5ZcP67ydQl&si=lWlL9P1_7SajTV1J", image: "https://i.ytimg.com/vi/IYcTMSo12GU/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYciBXKDwwDw==&rs=AOn4CLDC4_s8_T5Htv7gXwS2MIs7_meRdQ" },
+          { name: "Եթերաշրջան 5", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGTmiLAChgCn6VtAUhEv0Zl5&si=uDaapjZgKY6kcqYC", image: "https://i.ytimg.com/vi/2GqkTBJS2R4/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBHNbfEILFRU0gqrg1VcghQaRJIKw" },
+          { name: "Եթերաշրջան 6", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGQorvwrOY4bGvRS-Hu56f4M&si=fLNMnET5HAZX_iA6", image: "https://i.ytimg.com/vi/UYN84Vbl7wM/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDtNje9zIrQ7LAHxoC6yuu9qXF_Ew" },
+          { name: "Եթերաշրջան 7", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGQf3aGO4Le6bi-JKUQV6Ju3&si=2g0faCO72Jk5OMnr", image: "https://i.ytimg.com/vi/RnQUDoOWtnE/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDFBsRqexw919z8UPSxAYX4VBVt-w" },
+        ]},
+        { name: "Բլբուլյանները / Blbulyanner", channel: "ArmeniaTV", image: "https://i.ytimg.com/vi/_cTHTePTHCg/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYZSBgKEwwDw==&rs=AOn4CLDRLYqp5OmcU-WI8UhCjFIh1c3EjQ", seasons: [
+          { name: "Եթերաշրջան 1", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGQOfymOHPc3MFYQchIZGzXT&si=T74i6ngDx6_rZdzc", image: "https://i.ytimg.com/vi/_cTHTePTHCg/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYZSBgKEwwDw==&rs=AOn4CLDRLYqp5OmcU-WI8UhCjFIh1c3EjQ" },
+          { name: "Եթերաշրջան 2", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGSull-DBM7V909P9pG8Kflt&si=XiUuyDMKJqpczmmo", image: "https://i.ytimg.com/vi/DgVGM-ndfbs/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYZSBaKFgwDw==&rs=AOn4CLAYzlTxAWGHh3EpmSCrEaoqu8JL4Q" },
+          { name: "Եթերաշրջան 3", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGRLSKCK-9QvsCSE1-baG3h-&si=XkKytIUCzSXUSHo7", image: "https://i.ytimg.com/vi/kJA_DjRK_7I/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4AdQGgALgA4oCDAgAEAEYciBUKDQwDw==&rs=AOn4CLBWbONy4DHWmuv_V9W3q-MJu2Upyw" },
+          { name: "Եթերաշրջան 4", url: "https://youtube.com/playlist?list=PLk4nzq9lMqGRjDlFaUlMy4lU5LV3H8zJO&si=aury_NofR9EqH1hh", image: "https://i.ytimg.com/vi/eQS19gW253o/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYZSBlKGUwDw==&rs=AOn4CLAdS4EE5_kr636ybofK8Nlcxh25KA" },
+        ]},
+        { name: "Կինստագրամ / Kinstagram", channel: "ArmeniaTV", image: "https://i.ytimg.com/vi/xQwMHkzomfI/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLAq8WvHNzH_KwjpAKBGZNWCaLEQXA", seasons: [
+          { name: "Եթերաշրջան 1", url: "https://youtube.com/playlist?list=PLOTl-rSp4UKd_Ea8Md_urpsuqcudCqhib&si=B7wv6N18F3UFdJOv" },
+        ]},
+        { name: "Փափուկ խաղալիք / Papuk khaghaliq", channel: "ArmeniaTV", image: "https://i.ytimg.com/vi/Fv4fJM-EIGE/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLB3LnmMPGvhXfvqJd81N1LODehZng", seasons: [
+          { name: "Եթերաշրջան 1", url: "https://youtube.com/playlist?list=PLOTl-rSp4UKdz3ChG-AdFaBE2m5YyFoT-&si=xdgNXCpAq9mC_-B_" },
+        ]},
+        { name: "Շինարարները / Shinararnery", channel: "ArmeniaTV", image: "https://i.ytimg.com/vi/1U2GGLnKIa4/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBO4xLAO9iDvArK0kgryPX1r9Kplw", seasons: [
+          { name: "Եթերաշրջան 1", url: "https://youtube.com/playlist?list=PLdsJ9bdP2I0YBQd9eaIkY-TE8qtosu0Gp&si=iFlUWSY3jX8xYTXS" },
+        ]},
+ 
+      ]
+    };
+
+    // Search functionality to filter cards by title
+    // search filter
+    document.getElementById('search').addEventListener('input', (e) => { // Add event listener for search input
+      const q = e.target.value.trim().toLowerCase(); // Get trimmed lowercase query
+      const cards = document.querySelectorAll('#list-inner .card'); // Get all card elements
+      cards.forEach(c => { // Loop through each card
+        const title = c.getAttribute('data-title') || ''; // Get card title attribute
+        c.style.display = title.includes(q) ? '' : 'none'; // Show or hide card based on match
+      });
+    });
+
+
+    // Utility functions for DOM selection
+    const $ = (s, el=document)=> el.querySelector(s); // Shorthand for querySelector
+    const $$ = (s, el=document)=> Array.from((el||document).querySelectorAll(s)); // Shorthand for querySelectorAll as array
+
+
+    // Throttle function to limit function calls
+    function throttle(fn, wait){ // Define throttle function
+      let last = 0; // Track last execution time
+      return function(...args){ // Return throttled function
+        const now = Date.now(); // Get current time
+        if (now - last >= wait){ // Check if enough time has passed
+          last = now; // Update last execution time
+          fn.apply(this, args); // Call the original function
+        }
+      };
+    }
+
+
+    // Helper to create DOM elements with attributes and children
+    function createEl(tag, attrs={}, children=[]){ // Define createEl function
+      const el = document.createElement(tag); // Create the element
+      Object.keys(attrs).forEach(k=>{ // Loop through attributes
+        if (k === 'class') el.className = attrs[k]; // Set className for 'class' key
+        else if (k === 'text') el.textContent = attrs[k]; // Set textContent for 'text' key
+        else el.setAttribute(k, attrs[k]); // Set other attributes
+      });
+      (Array.isArray(children)?children:[children]).forEach(c=>{ if (!c) return; if (typeof c === 'string') el.insertAdjacentHTML('beforeend', c); else el.appendChild(c); }); // Append children
+      return el; // Return the created element
+    }
+
+    // State variables for pagination
+    // pagination state
+    let currentList = []; // Array to hold current list of games
+    let currentPage = 1; // Current page number
+    const itemsPerPage = 999; // Number of items per page (set high to show all items on one page)
+
+    // Function to render the list of games for a specific page
+    function renderGameListDOM(list, page = 1){ // Define renderGameListDOM function
+      currentList = list; // Update current list
+      currentPage = page; // Update current page
+      const inner = document.getElementById('list-inner'); // Get the inner container
+      inner.innerHTML = ''; // Clear the container
+
+      // figure out which items belong on this page
+      let pageItems; // Variable to hold items for this page
+      // if any game has explicit page property, respect it
+      const hasPageData = list.some(g=>g.page != null); // Check if any game has page property
+      if(hasPageData){ // If there are explicit pages
+        // collect explicit and unpaged items separately
+        const explicit = list.filter(g=>g.page != null); // Filter games with page
+        const unpaged = list.filter(g=>g.page == null); // Filter games without page
+        const maxExplicit = explicit.length ? Math.max(...explicit.map(g=>g.page)) : 0; // Get max explicit page
+
+        if(page <= maxExplicit){ // If page is within explicit pages
+          // show explicit page entries
+          pageItems = explicit.filter(g=>g.page === page); // Get games for this page
+        } else { // If page is beyond explicit pages
+          // calculate unpaged slice for this page
+          const zeroIndex = page - maxExplicit - 1; // Calculate zero-based index
+          const startIdx = zeroIndex * itemsPerPage; // Calculate start index
+          pageItems = unpaged.slice(startIdx, startIdx + itemsPerPage); // Slice unpaged items
+          // assign chosen items the page number so they persist
+          pageItems.forEach(g=>{ g.page = page; }); // Assign page to items
+        }
+      } else { // If no explicit pages
+        const start = (page - 1) * itemsPerPage; // Calculate start index
+        pageItems = list.slice(start, start + itemsPerPage); // Slice the list
+      }
+
+      pageItems.forEach((game, index) => { // Loop through each game on the page with index
+        const displayName = (typeof game.name === 'string') ? game.name : (game.name && game.name.hy) || (game.name && game.name.en) || ''; // Get display name, handling different formats
+        const card = createEl('article', { class: 'card game-card-enter' }); // Create card element with animation class
+        card.setAttribute('data-title', displayName.toLowerCase()); // Set data attribute for search
+        card.setAttribute('data-game-name', displayName); // Set data attribute for game name
+        card.style.animationDelay = (index * 0.05) + 's'; // Stagger animation delay
+
+        const thumb = createEl('a', { class: 'thumb', href: game.seasons[0].url, target: '_blank', rel: 'noopener noreferrer', style: `background-image:url('${game.image}');` }); // Create thumbnail link with background image
+        card.appendChild(thumb); // Append thumbnail to card
+
+        const body = createEl('div', { class: 'card-body' }); // Create card body
+        const meta = createEl('div', { class: 'meta' }); // Create meta div
+        const name = createEl('a', { class: 'name', href: game.seasons[0].url, target: '_blank', rel: 'noopener noreferrer', text: displayName }); // Create name link
+        meta.appendChild(name); // Append name to meta
+
+        const badge = createEl('div', { class: 'badge', text: '' }); // Create badge div
+        body.appendChild(meta); body.appendChild(badge); // Append meta and badge to body
+
+        // Add season selector if multiple seasons
+        if (game.seasons && game.seasons.length > 1) { // Check if multiple seasons
+          const seasonSelector = createEl('div', { class: 'season-selector' }); // Create season selector div
+          const seasonSelect = createEl('select', { class: 'season-select', id: `season-select-${index}` }); // Create select element
+          game.seasons.forEach((season, idx) => { // Loop through seasons
+            const option = createEl('option', { value: season.url, text: season.name }); // Create option for each season
+            seasonSelect.appendChild(option); // Append option to select
+          });
+          seasonSelector.appendChild(seasonSelect); // Append select to selector
+
+          body.appendChild(seasonSelector); // Append selector to body
+
+          seasonSelect.addEventListener('change', (e) => { // Add change event listener
+            const selectedSeason = game.seasons.find(s => s.url === e.target.value); // Find selected season
+            thumb.href = e.target.value; // Update thumbnail href
+            name.href = e.target.value; // Update name href
+            thumb.style.backgroundImage = `url('${selectedSeason.image || game.image}')`; // Update background image
+          });
+        }
+
+        card.appendChild(body); // Append body to card
+        inner.appendChild(card); // Append card to inner container
+
+        // Add interactive parallax / tilt on pointer movement (respect reduced motion)
+        try{ // Try-catch for safety
+          const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; // Check for reduced motion preference
+          if (!prefersReduced) { // If no reduced motion
+            let raf = null; // Request animation frame variable
+            const onMove = (e) => { // Pointer move handler
+              if (raf) cancelAnimationFrame(raf); // Cancel previous frame
+              raf = requestAnimationFrame(()=>{ // Request new frame
+                const rect = card.getBoundingClientRect(); // Get card rectangle
+                const px = ((e.clientX || (e.touches && e.touches[0].clientX)) - rect.left) / rect.width; // Calculate x position
+                const py = ((e.clientY || (e.touches && e.touches[0].clientY)) - rect.top) / rect.height; // Calculate y position
+                const clampedX = Math.max(0, Math.min(1, px)); // Clamp x between 0 and 1
+                const clampedY = Math.max(0, Math.min(1, py)); // Clamp y between 0 and 1
+                const rotY = (clampedX - 0.5) * 12; // Calculate y rotation
+                const rotX = (0.5 - clampedY) * 8;  // Calculate x rotation
+                const scale = 1.04; // Scale factor
+                card.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(${scale})`; // Apply transform
+                // move background position for parallax feel
+                const posX = 50 + (clampedX - 0.5) * 12; // Calculate background x position
+                const posY = 50 + (clampedY - 0.5) * 8; // Calculate background y position
+                thumb.style.backgroundPosition = `${posX}% ${posY}%`; // Set background position
+                thumb.style.transform = 'scale(1.06)'; // Scale thumbnail
+              });
+            };
+
+            const onEnter = ()=>{ // Pointer enter handler
+              card.style.transition = 'transform .18s cubic-bezier(0.2,0.8,0.2,1), box-shadow .28s'; // Add transition
+              thumb.style.transition = 'transform .24s cubic-bezier(0.2,0.8,0.2,1), background-position .24s'; // Add transition to thumb
+            };
+
+            const onLeave = ()=>{ // Pointer leave handler
+              if (raf) cancelAnimationFrame(raf); raf = null; // Cancel animation frame
+              card.style.transform = ''; // Reset transform
+              card.style.transition = ''; // Reset transition
+              thumb.style.transform = ''; // Reset thumb transform
+              thumb.style.backgroundPosition = 'center'; // Reset background position
+              thumb.style.transition = ''; // Reset thumb transition
+            };
+
+            card.addEventListener('pointermove', onMove); // Add pointer move listener
+            card.addEventListener('pointerenter', onEnter); // Add pointer enter listener
+            card.addEventListener('pointerleave', onLeave); // Add pointer leave listener
+            // support touch end
+            card.addEventListener('touchmove', onMove, {passive:true}); // Add touch move listener
+            card.addEventListener('touchend', onLeave); // Add touch end listener
+          }
+        }catch(e){} // Catch any errors
+      });
+
+      renderPagination(); // Render pagination controls
+    }
+
+    // Function to render the pagination input
+    function renderPagination(){ // Define renderPagination function
+      const headerEl = document.getElementById('header-pagination'); // Get header pagination element
+      const paginationEl = headerEl || document.getElementById('pagination'); // Use header or bottom pagination
+      if (!paginationEl) return; // Exit if no pagination element
+      // show/hide bottom area depending on header presence
+      const bottomEl = document.getElementById('pagination'); // Get bottom pagination
+      if (headerEl && bottomEl) bottomEl.style.display = 'none'; // Hide bottom if header exists
+      if (!headerEl && bottomEl) bottomEl.style.display = 'block'; // Show bottom if no header
+      paginationEl.innerHTML = ''; // Clear pagination content
+      // determine total pages based on either explicit page data or count
+      let totalPages; // Variable for total pages
+      const hasPageData = currentList.some(g=>g.page != null); // Check for explicit page data
+      if(hasPageData){ // If explicit pages exist
+        const explicitPages = currentList.filter(g=>g.page!=null).map(g=>g.page); // Get explicit pages
+        const maxExplicit = explicitPages.length ? Math.max(...explicitPages) : 0; // Get max explicit page
+        const unpagedCount = currentList.filter(g=>g.page==null).length; // Count unpaged items
+        const unpagedPages = Math.ceil(unpagedCount / itemsPerPage); // Calculate unpaged pages
+        totalPages = Math.max(maxExplicit, maxExplicit + unpagedPages) || 1; // Calculate total pages
+      } else { // If no explicit pages
+        totalPages = Math.ceil(currentList.length / itemsPerPage) || 1; // Calculate total pages from length
+      }
+
+      // manual page input only. add margin depending on container
+      const isHeader = paginationEl.id === 'header-pagination'; // Check if header pagination
+      const styleStr = 'width:100px;'+(isHeader ? 'margin-right:12px;' : 'margin-left:12px;')+'padding:6px 8px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:#fff;font-size:1rem;'; // Style string for input
+      const input = createEl('input',{type:'number',min:'1',max:totalPages,value:currentPage,style:styleStr}); // Create input element
+      const navigate = () => { // Navigation function
+        let v = parseInt(input.value,10); // Parse input value
+        if(isNaN(v) || v<1) v=1; // Clamp to minimum
+        if(v>totalPages) v=totalPages; // Clamp to maximum
+        renderGameListDOM(currentList,v); // Render page
+      };
+      // only navigate on Enter key
+      input.addEventListener('keyup',(e)=>{ if(e.key==='Enter') navigate(); }); // Add keyup listener
+      paginationEl.appendChild(input); // Append input to pagination
+    }
+
+    // Function to open modal for seasons
+    function openSeasonModal(game) { // Define openSeasonModal function
+      const modal = document.getElementById('season-modal'); // Get modal element
+      const title = document.getElementById('modal-title'); // Get modal title
+      const container = document.getElementById('seasons-list-container'); // Get seasons container
+      
+      title.textContent = game.name; // Set modal title
+      container.innerHTML = ''; // Clear container
+
+      game.seasons.forEach((season) => { // Loop through seasons
+        const item = createEl('a', { // Create season item link
+          class: 'season-item', 
+          href: season.url,
+          target: '_blank',
+          rel: 'noopener noreferrer'
+        });
+        item.innerHTML = `<div class="season-item-title">${season.name}</div><div class="season-item-link">Watch on YouTube →</div>`; // Set inner HTML
+        item.addEventListener('click', (e) => { // Add click listener
+          // Update the card's image and links
+          const card = document.querySelector(`[data-game-name="${game.name}"]`); // Find card by game name
+          if (card) { // If card found
+            const thumb = card.querySelector('.thumb'); // Get thumbnail
+            const nameLink = card.querySelector('.name'); // Get name link
+            thumb.href = season.url; // Update thumbnail href
+            nameLink.href = season.url; // Update name link href
+            thumb.style.backgroundImage = `url('${season.image || game.image}')`; // Update background image
+          }
+        });
+        container.appendChild(item); // Append item to container
+      });
+
+      modal.classList.add('active'); // Show modal
+    }
+
+    // Function to prefetch URLs
+    function prefetchUrl(url){ // Define prefetchUrl function
+      try{ const l = document.createElement('link'); l.rel = 'prefetch'; l.href = url; document.head.appendChild(l); } catch(e){} // Create prefetch link element
+    }
+
+    // Attach prefetch handlers for links
+    function attachPrefetchHandlers(){ // Define attachPrefetchHandlers function
+      document.addEventListener('mouseover', throttle((e)=>{ // Add throttled mouseover listener
+        const a = e.target.closest && e.target.closest('a'); // Find closest anchor element
+        if (a && a.href) prefetchUrl(a.href); // Prefetch if anchor has href
+      }, 200)); // Throttle to 200ms
+    }
+
+    // Initialize keyboard shortcuts
+    function initKeyboardShortcuts(){ // Define initKeyboardShortcuts function
+      document.addEventListener('keydown', (e)=>{ // Add keydown listener
+        if (e.key === '/') { e.preventDefault(); document.getElementById('search').focus(); } // Focus search on slash
+        // only slash shortcut now
+      });
+    }
+
+    // Initialize enhancements like prefetch and shortcuts
+    function initEnhancements(){ // Define initEnhancements function
+      attachPrefetchHandlers(); // Attach prefetch handlers
+      initKeyboardShortcuts(); // Initialize shortcuts
+    }
+
+    // initial population
+    (function init(){ // Immediately invoked function expression for initialization
+      const s = document.getElementById('search'); // Get search input
+      if (s) s.placeholder = 'Փնտրել սիտքոմը...'; // Set placeholder text
+      initEnhancements(); // Initialize enhancements
+
+      // channel buttons
+      const armBtn = document.getElementById('btn-armenia'); // Get Armenia button
+      const shantBtn = document.getElementById('btn-shant'); // Get Shant button
+      function setActive(btn){ // Function to set active button
+        document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active')); // Remove active class from all
+        if (btn) btn.classList.add('active'); // Add active class to button
+      }
+      if (armBtn) armBtn.addEventListener('click', ()=>{ // Add click listener to Armenia button
+        setActive(armBtn); // Set Armenia as active
+        renderGameListDOM(games.all.filter(g=>g.channel === 'ArmeniaTV'),1); // Render Armenia games
+      });
+      if (shantBtn) shantBtn.addEventListener('click', ()=>{ // Add click listener to Shant button
+        setActive(shantBtn); // Set Shant as active
+        renderGameListDOM(games.all.filter(g=>g.channel === 'ShantTV'),1); // Render Shant games
+      });
+
+      // Load ArmeniaTV by default
+      setActive(armBtn); // Set Armenia as active by default
+      renderGameListDOM(games.all.filter(g=>g.channel === 'ArmeniaTV'),1); // Render Armenia games by default
+    })();
+
+
+  </script>
+</body>
+</html>
